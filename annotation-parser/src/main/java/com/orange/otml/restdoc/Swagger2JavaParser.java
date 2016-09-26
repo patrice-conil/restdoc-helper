@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 
 import static com.orange.otml.restdoc.Constant.CLASS_END;
 import static com.orange.otml.restdoc.Constant.CLASS_HEADER;
@@ -100,7 +101,7 @@ public class Swagger2JavaParser extends AbstractParser {
 
     @Override
     protected void writeClassStart(Class c) throws IOException {
-        byte[] content = String.format(CLASS_HEADER, packageName, c.getSimpleName()).getBytes();
+        byte[] content = String.format(CLASS_HEADER, packageName, c.getSimpleName()).getBytes(StandardCharsets.UTF_8);
         classFile = createClassFile(c.getSimpleName(), targetJavaDirName, "FieldDescriptor.java");
         classFile.write(content);
         classFile.flush();
@@ -137,7 +138,7 @@ public class Swagger2JavaParser extends AbstractParser {
      * @throws IOException If something goes wrong wile writing to file
      */
     private void writeClassEnd(FileOutputStream stream) throws IOException {
-        byte[] content = CLASS_END.getBytes();
+        byte[] content = CLASS_END.getBytes(StandardCharsets.UTF_8);
         stream.write(content);
     }
 
@@ -150,7 +151,7 @@ public class Swagger2JavaParser extends AbstractParser {
      * @throws IOException If something goes wrong wile writing to file
      */
     private void writeFieldDescriptors(FileOutputStream stream, String fd, String fdList) throws IOException {
-        byte[] content = (fd + "\n\n" + fdList + "\n\n").getBytes();
+        byte[] content = (fd + "\n\n" + fdList + "\n\n").getBytes(StandardCharsets.UTF_8);
         stream.write(content);
     }
 

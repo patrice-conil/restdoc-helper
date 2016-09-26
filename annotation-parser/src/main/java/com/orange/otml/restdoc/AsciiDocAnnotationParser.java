@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 
 import static com.orange.otml.restdoc.Constant.CLASS_HEADER_FORMAT;
 import static com.orange.otml.restdoc.Constant.CLASS_HEADER_WITH_DESCRIPTION_FORMAT;
@@ -103,7 +104,7 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      * @throws IOException If something goes wrong wile writing to file
      */
     private void writeFieldFooter(FileOutputStream stream) throws IOException {
-        byte[] content = Constant.FIELD_FOOTER.getBytes();
+        byte[] content = Constant.FIELD_FOOTER.getBytes(StandardCharsets.UTF_8);
         stream.write(content);
     }
     
@@ -116,8 +117,8 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      */
     private void writeFieldInfo(Field field, Annotation anno, FileOutputStream stream) throws IOException {
         byte[] content = String.format(FIELD_FORMAT, field.getName(), field.getType().getSimpleName(),
-                ((AsciidocAnnotation) anno).description(),
-                ((AsciidocAnnotation) anno).constraints()).getBytes();
+                ((AsciidocAnnotation) anno).description(), ((AsciidocAnnotation) anno).constraints())
+                .getBytes(StandardCharsets.UTF_8);
         stream.write(content);
         stream.flush();
     }
@@ -128,7 +129,7 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      * @throws IOException If something goes wrong wile writing to file
      */
     private void writeFieldHeader(FileOutputStream stream) throws IOException {
-        byte[] content = FIELD_HEADER_FORMAT.getBytes();
+        byte[] content = FIELD_HEADER_FORMAT.getBytes(StandardCharsets.UTF_8);
         stream.write(content);
         stream.flush();
     }
@@ -146,10 +147,10 @@ public class AsciiDocAnnotationParser extends AbstractParser {
         if ("".equals(anno.description())) {
 
             content = String.format(CLASS_HEADER_FORMAT, c.getSimpleName(), c.getSimpleName())
-                    .getBytes();
+                    .getBytes(StandardCharsets.UTF_8);
         } else {
             content = String.format(CLASS_HEADER_WITH_DESCRIPTION_FORMAT, c.getSimpleName(), c.getSimpleName(),
-                    anno.description()).getBytes();
+                    anno.description()).getBytes(StandardCharsets.UTF_8);
         }
         stream.write(content);
         stream.flush();

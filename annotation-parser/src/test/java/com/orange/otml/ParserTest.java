@@ -65,17 +65,17 @@ public class ParserTest {
 
     @Test(expected = ParserException.class)
     public void badPackageName() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.orange/otml", "target", "target/classes");
+        new AsciiDocAnnotationParser("com.orange/otml", "target", "target/classes");
     }
 
     @Test(expected = ParserException.class)
     public void badTargetName() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.orange.otml", "/bin", "target/classes");
+        new AsciiDocAnnotationParser("com.orange.otml", "/bin", "target/classes");
     }
 
     @Test(expected = ParserException.class)
     public void unwritableTargetName() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.orange.otml", "/Users", "target/classes");
+        new AsciiDocAnnotationParser("com.orange.otml", "/Users", "target/classes");
     }
 
 }
