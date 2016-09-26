@@ -1,0 +1,31 @@
+package com.orange.otml.otmllive.com.orange.otml.model;
+
+import org.springframework.restdocs.payload.FieldDescriptor; 
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+
+public class ChannelFieldDescriptor {
+    public static FieldDescriptor[] fdChannel = new FieldDescriptor[] {
+        fieldWithPath("id").description("Identifier of the channel (Corresponds to the EPG identifier)"),
+        fieldWithPath("name").description("Name of the channel"),
+        fieldWithPath("zappingNumber").description("Code used to zap on the channel (on a STB ZE)"),
+        fieldWithPath("slogan").description("The channel slogan (used in case of no EPG description)"),
+        fieldWithPath("catchupId").description("The associated catchup channel identifier"),
+        fieldWithPath("bouquets").description("List of bouquets linked to the channel (PA_xxx)"),
+        fieldWithPath("links").description("List of links which points to entity in relation with the current channel (For now, points to the list of programs for the whole day)"),
+        fieldWithPath("logos").description("List of logos available for the given channel"),
+        fieldWithPath("terminalModels").description("List of terminal models available for the given channel")    };
+
+
+    public static FieldDescriptor[] fdChannelList = new FieldDescriptor[] {
+        fieldWithPath("[].id").description("Identifier of the channel (Corresponds to the EPG identifier)"),
+        fieldWithPath("[].name").description("Name of the channel"),
+        fieldWithPath("[].zappingNumber").description("Code used to zap on the channel (on a STB ZE)"),
+        fieldWithPath("[].slogan").description("The channel slogan (used in case of no EPG description)"),
+        fieldWithPath("[].catchupId").description("The associated catchup channel identifier"),
+        fieldWithPath("[].bouquets").description("List of bouquets linked to the channel (PA_xxx)"),
+        fieldWithPath("[].links").description("List of links which points to entity in relation with the current channel (For now, points to the list of programs for the whole day)"),
+        fieldWithPath("[].logos").description("List of logos available for the given channel"),
+        fieldWithPath("[].terminalModels").description("List of terminal models available for the given channel")    };
+
+
+}

@@ -1,0 +1,14 @@
+.class
+.settings
+.project
+.classpath
+target
+bin
+#intellij
+.idea/
+*.iml
+*.iws
+spy.log
+*.log
+src/test/java/generated
+*/generated-test-sources

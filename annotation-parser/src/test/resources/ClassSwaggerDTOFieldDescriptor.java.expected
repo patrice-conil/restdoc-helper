@@ -1,0 +1,19 @@
+package com.orange.otml;
+
+import org.springframework.restdocs.payload.FieldDescriptor; 
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+
+public class ClassSwaggerDTOFieldDescriptor {
+    public static FieldDescriptor[] fdClassSwaggerDTO = new FieldDescriptor[] {
+        fieldWithPath("field1").description("This is the field field1"),
+        fieldWithPath("field2").description("This is the optional field field2").optional(),
+        fieldWithPath("field3").description("This is the field field3")    };
+
+
+    public static FieldDescriptor[] fdClassSwaggerDTOList = new FieldDescriptor[] {
+        fieldWithPath("[].field1").description("This is the field field1"),
+        fieldWithPath("[].field2").description("This is the optional field field2").optional(),
+        fieldWithPath("[].field3").description("This is the field field3")    };
+
+
+}

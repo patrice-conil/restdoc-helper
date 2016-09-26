@@ -1,0 +1,47 @@
+[SimilarContent]
+= SimilarContent
+SimilarContent describes a similar content as the one it refers to
+|===
+| Field| Type| Description| Constraints
+
+| title
+| String
+| Title
+| 
+
+| id
+| String
+| Content identifier : the content identifier depends on its contentType. For MOVIE contentType, id is a videoId (aka externalAssetId in RTV). For SEASON contentType, id is a seasonId (aka serieId in RTV)
+| 
+
+| offerId
+| String
+| Offer identifier
+| 
+
+| serviceType
+| String
+| Type of com.orange.otml.service see <<com.orange.otml.model-ServiceTypeEnum>>
+| 
+
+| contentType
+| String
+| Type of content see <<com.orange.otml.model-ContentTypeEnum>>
+| 
+
+| similarity
+| String
+| Type of similarity see <<com.orange.otml.model-SimilarityEnum>>
+| 
+
+| csaLevel
+| Integer
+| CSA Level
+| between 1 and 5
+
+| images
+| List
+| Available images see <<com.orange.otml.model-Image>>
+| 
+|===
+
