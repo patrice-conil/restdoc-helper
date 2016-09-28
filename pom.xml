@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>restdoc-annotation</module>
-        <module>annotation-parser</module>
+        <module>restdoc-helper-plugin</module>
         <module>springboot-sample</module>
     </modules>
     

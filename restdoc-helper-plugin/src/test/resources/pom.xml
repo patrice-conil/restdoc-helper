@@ -12,7 +12,7 @@
         <plugins>
             <plugin>
                 <groupId>com.orange.otml</groupId>
-                <artifactId>annotation-parser</artifactId>
+                <artifactId>restdoc-helper-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
                     <sourceDir>${basedir}/target/classes/</sourceDir>

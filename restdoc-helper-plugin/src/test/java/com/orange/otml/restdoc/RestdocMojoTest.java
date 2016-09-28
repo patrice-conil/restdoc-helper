@@ -3,6 +3,8 @@ package com.orange.otml.restdoc;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.io.File;
 
@@ -13,8 +15,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Mojo execution test.
  */
-
-public class AdocMojoTest {
+@RunWith(JUnit4.class)
+public class RestdocMojoTest {
 
     @Rule
     public MojoRule rule = new MojoRule() {
@@ -26,16 +28,15 @@ public class AdocMojoTest {
         protected void after() {
         }
     };
-
-
+    
     @Test
     public void execute() throws Exception {
         File pom = getTestFile("src/test/resources/pom.xml");
         assertNotNull(pom);
         assertTrue(pom.exists());
-        AdocMojo myMojo = (AdocMojo) rule.lookupMojo("restdoc-helper", pom);
+        RestdocMojo myMojo = (RestdocMojo) rule.lookupMojo("restdoc-helper", pom);
         assertNotNull(myMojo);
         myMojo.execute();
     }
-
+    
 }

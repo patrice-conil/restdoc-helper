@@ -9,7 +9,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * Generate restdoc files and java fieldDescriptor classes.
  */
 @Mojo(name = "restdoc-helper")
-public class AdocMojo extends AbstractMojo {
+public class RestdocMojo extends AbstractMojo {
 
     /**
      * Where we want to start searching sources.

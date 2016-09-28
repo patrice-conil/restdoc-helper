@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+    <bannerLeft>
+        <name>restdoc-helper-plugin</name>
+        <src>http://maven.apache.org/images/apache-maven-project.png</src>
+        <href>https://github.com/patrice-conil/restdoc-helper</href>
+    </bannerLeft>
+    <bannerRight>
+        <src>http://maven.apache.org/images/maven-small.gif</src>
+    </bannerRight>
+    <body>
+        <links>
+            <item name="restdoc" href="http://www.apache.org/" />
+            <item name="asciidoctor" href="http://maven.apache.org/maven-1.x/"/>
+            <item name="Maven 2" href="http://maven.apache.org/"/>
+        </links>
+
+        <menu name="restdoc-helper">
+            <item name="Introduction" href="readme.html"/>
+            <item name="Github site" href="https://github.com/patrice-conil/restdoc-helper"/>
+            <item name="Release Notes" href="release-notes.html" />
+            <item name="General Information" href="readme.html"/>
+        </menu>
+
+        <menu ref="reports"/>
+    </body>
+</project>

@@ -68,9 +68,13 @@ public class ParserTest {
         new AsciiDocAnnotationParser("com.orange/otml", "target", "target/classes");
     }
 
-    @Test(expected = ParserException.class)
+    @Test
     public void badTargetName() throws Exception {
-        new AsciiDocAnnotationParser("com.orange.otml", "/bin", "target/classes");
+        try {
+            new AsciiDocAnnotationParser("com.orange.otml", "/bin", "target/classes");
+        } catch (ParserException e) {
+            assertEquals(e.getMessage(), "Can't create file /bin/generated-test-sources/");
+        }
     }
 
     @Test(expected = ParserException.class)
