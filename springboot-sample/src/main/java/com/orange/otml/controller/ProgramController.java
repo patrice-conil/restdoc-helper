@@ -63,8 +63,8 @@ public class ProgramController {
      * @return list of program summaries
      */
     @RequestMapping(value = "/programs", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.GET)
-    @ApiOperation(value = "Get a list of light programs given a date for a given range of channels possibly",
-            notes = "Get a list of programs (light information) for a range of channels (one, a list with commas or "
+    @ApiOperation(value = "Get a list of programs given a date for a given range of channels possibly",
+            notes = "Get a list of programs for a range of channels (one, a list with commas or "
                     + "all) a specific date formatted as 'YYYY-MM-DD'.",
             response = Program.class,
             responseContainer = "List")
@@ -82,7 +82,7 @@ public class ProgramController {
                             @ResponseHeader(name = "ETag", description = "The Entity Tag", response = String.class)}),
             @ApiResponse(code = Constant.BAD_REQUEST, message = "Bad Request", response = Error.class),
             @ApiResponse(code = Constant.INTERNAL_EROR, message = "Internal Server Error", response = Error.class)})
-    public ResponseEntity<List<Program>> getLightPrograms(
+    public ResponseEntity<List<Program>> getPrograms(
             @RequestParam(value = "date", required = false, defaultValue = "current") String date,
             @RequestParam(value = "application", required = false, defaultValue = "PC") String application,
             @RequestParam(value = "channels", required = false, defaultValue = "all") List<String> channels,

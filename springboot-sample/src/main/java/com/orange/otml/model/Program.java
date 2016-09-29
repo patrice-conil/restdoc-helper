@@ -14,8 +14,7 @@ import java.util.Objects;
 /**
  * Object that 'summarize' a Program (light data).
  */
-@MustBeDocumented(description = "Short Form  as retrieved with GET Programs ... "
-                                + "see full form in <<com.orange.otml.model-Program, Program>>")
+@MustBeDocumented(description = "Electronic Program Guide Item")
 public class Program {
 
     /**

@@ -1,4 +1,4 @@
-package com.orange.otml;
+package com.orange.otml.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
