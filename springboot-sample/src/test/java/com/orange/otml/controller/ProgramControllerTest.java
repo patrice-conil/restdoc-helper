@@ -21,6 +21,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
@@ -92,12 +94,10 @@ public class ProgramControllerTest {
     
     @Test
     public void getPrograms() throws Exception {
-
         
-
         when(programsService.findAllPrograms(any(), any(), any()))
                 .thenReturn(findAllPrograms(LocalDate.now().toString(), "PC", Collections.singletonList("19")));
-
+        
         mockMvc.perform(get("/v1/programs").contentType(MediaType.APPLICATION_JSON_UTF8).header("Host", "localhost")
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 /*
@@ -122,7 +122,30 @@ public class ProgramControllerTest {
         //Checks that snippet exists
         assertEquals(true, new File("target/generated-snippets/get-programs").exists());
     }
+    
+    @Test
+    public void getProgramsWithBadDate() throws Exception {
 
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.set("date", "badDate");
+
+        mockMvc.perform(get("/v1/programs").contentType(MediaType.APPLICATION_JSON_UTF8).header("Host", "localhost")
+                .params(params)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                /*
+                 * Here's the magic doc
+                 */
+                .andDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())
+                        )
+                )
+                // Expect your response is an error
+                .andExpect(status().is4xxClientError());
+
+        //Checks that snippet exists
+        assertEquals(true, new File("target/generated-snippets/get-programs").exists());
+    }
+    
+    
     private List<Program> findAllPrograms(String date, String application, List<String> channels) {
 
         Program programLight = new Program("0", "EPISODE", "House of cards",

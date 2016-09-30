@@ -238,6 +238,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.4.1.RELEASE</version>
+                <configuration>
+                    <addResources>false</addResources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -293,6 +303,30 @@
                 </dependencies>
             </plugin>
             <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <id>generate-doc</id>
+                        <!-- If you want to package the documentation in your project’s jar you should use the prepare-package phase. -->
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
+                            <sourceDirectory>${basedir}/src/main/asciidoc</sourceDirectory>
+                            <!-- Define an attribute named snippets that can be used when including the generated snippets in your documentation. -->
+                            <attributes>
+                                <snippets>${basedir}/target/generated-snippets</snippets>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.1</version>
@@ -316,30 +350,6 @@
                                     <directory>${basedir}/target/generated-docs</directory>
                                 </resource>
                             </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <id>generate-doc</id>
-                        <!-- If you want to package the documentation in your project’s jar you should use the prepare-package phase. -->
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <backend>html</backend>
-                            <doctype>book</doctype>
-                            <sourceDirectory>${basedir}/src/main/asciidoc</sourceDirectory>
-                            <!-- Define an attribute named snippets that can be used when including the generated snippets in your documentation. -->
-                            <attributes>
-                                <snippets>${basedir}/target/generated-snippets</snippets>
-                            </attributes>
                         </configuration>
                     </execution>
                 </executions>

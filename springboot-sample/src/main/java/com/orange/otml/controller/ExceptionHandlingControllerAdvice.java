@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * Performs globally the com.orange.otml.exception handling. The exceptions below could be raised by any
- * com.orange.otml.controller and they would be handled here, if not handled in the com.orange.otml.controller
- * already.
- *
+ * Performs exception handling globally. The exceptions below could be raised by any
+ * controller and they would be handled here, if not handled in the controller.
  */
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
@@ -27,7 +25,7 @@ public class ExceptionHandlingControllerAdvice {
      * @param exception the com.orange.otml.exception
      * @return NotFound Error
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(SampleException.class)
     public ResponseEntity<Error> handleException(SampleException exception) {
         logger.warn("OTMLException: ", exception.getMessage());
         return new ResponseEntity<>(new Error(exception.getMessage()), HttpStatus.BAD_REQUEST);
