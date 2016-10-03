@@ -47,11 +47,11 @@ public class SwaggerStaticDocGeneratorTest {
 
 
     /**
-     * Calls Swagger2MarkupResultHandler to generate adoc files from swagger.json/swagger.yaml
+     * Calls Swagger2MarkupResultHandler to generate adoc files from swagger.json/swagger.yaml.
      * @throws Exception if something goes wrong
      */
     @Test
-    public void generateAsciiDoc() throws Exception{
+    public void generateAsciiDoc() throws Exception {
         String outDir = System.getProperty("asciiDocOutputDir", "target/generated-snippets");
         Swagger2MarkupResultHandler resultHandler = Swagger2MarkupResultHandler
                 .outputDirectory(outDir)
@@ -64,20 +64,20 @@ public class SwaggerStaticDocGeneratorTest {
     }
 
     /**
-     * Verify that the three expected docs are generated
+     * Verify that the three expected docs are generated.
      * definitions.adoc, overview.adoc, paths.adoc
      * @param outDir the directory where the doc must be generated
      * @return true if the three docs are present
      */
-    private boolean allDocsAreGenerated(String outDir){
+    private boolean allDocsAreGenerated(String outDir) {
         boolean result = true;
         String[] names = {"overview.adoc", "paths.adoc", "definitions.adoc"};
         List<String> fileNames = Arrays.asList(names);
-        for( String file : fileNames ){
-            if (!new File(outDir + '/' + file).exists()){
+        for (String file : fileNames) {
+            if (!new File(outDir + '/' + file).exists()) {
                 result = false;
             }
-        };
+        }
         return result;
     }
 }

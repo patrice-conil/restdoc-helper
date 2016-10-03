@@ -23,13 +23,9 @@
         <springfox.version>2.5.0</springfox.version>
         <spring.version>4.2.5.RELEASE</spring.version>
         <spring-restdoc.version>1.1.2.RELEASE</spring-restdoc.version>
-        <jersey-client.version>1.19.1</jersey-client.version>
-        <jsr311-api.version>1.1.1</jsr311-api.version>
         <junit.version>4.12</junit.version>
-        <jsr305.version>3.0.1</jsr305.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <swagger-model.version>1.5.9</swagger-model.version>
-        <cucumber.version>1.2.4</cucumber.version>
     </properties>
 
     <dependencyManagement>
@@ -88,11 +84,6 @@
                 <version>${springfox.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>${jsr305.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger-model.version}</version>
@@ -126,22 +117,6 @@
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>2.0.5</version>
-            </dependency>
-            <!-- Cucumber -->
-            <dependency>
-                <groupId>info.cukes</groupId>
-                <artifactId>cucumber-junit</artifactId>
-                <version>${cucumber.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>info.cukes</groupId>
-                <artifactId>cucumber-spring</artifactId>
-                <version>${cucumber.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>info.cukes</groupId>
-                <artifactId>cucumber-java</artifactId>
-                <version>${cucumber.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -194,7 +169,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!--SpringDoc dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

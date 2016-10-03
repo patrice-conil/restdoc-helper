@@ -142,7 +142,7 @@ public class ProgramControllerTest {
                 .andExpect(status().is4xxClientError());
 
         //Checks that snippet exists
-        assertEquals(true, new File("target/generated-snippets/get-programs").exists());
+        assertEquals(true, new File("target/generated-snippets/get-programs-with-bad-date").exists());
     }
     
     
