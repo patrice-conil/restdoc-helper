@@ -21,17 +21,17 @@ SimilarContent describes a similar content as the one it refers to
 
 | serviceType
 | String
-| Type of com.orange.otml.service see <<com.orange.otml.model-ServiceTypeEnum>>
+| Type of com.pconil.restdoc.service see <<com.pconil.restdoc.model-ServiceTypeEnum>>
 | 
 
 | contentType
 | String
-| Type of content see <<com.orange.otml.model-ContentTypeEnum>>
+| Type of content see <<com.pconil.restdoc.model-ContentTypeEnum>>
 | 
 
 | similarity
 | String
-| Type of similarity see <<com.orange.otml.model-SimilarityEnum>>
+| Type of similarity see <<com.pconil.restdoc.model-SimilarityEnum>>
 | 
 
 | csaLevel
@@ -41,7 +41,7 @@ SimilarContent describes a similar content as the one it refers to
 
 | images
 | List
-| Available images see <<com.orange.otml.model-Image>>
+| Available images see <<com.pconil.restdoc.model-Image>>
 | 
 |===
 

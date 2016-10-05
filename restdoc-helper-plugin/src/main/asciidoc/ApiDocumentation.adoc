@@ -10,7 +10,7 @@
 = Introduction
     Live API is a RESTful microservice to retrieve data from TV Live Domain (Channels, Programs and so on)
 
-[[com.orange.otml.model]]
+[[com.pconil.restdoc.model]]
 = Models
 Object models used to describe resources
 

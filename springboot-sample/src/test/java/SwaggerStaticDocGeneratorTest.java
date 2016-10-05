@@ -1,4 +1,4 @@
-import com.orange.otml.SpringbootSampleApplication;
+import com.pconil.restdoc.SpringbootSampleApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
