@@ -11,7 +11,50 @@ To achieve that, it's necessary to document all fields of data classes involved 
 What'is missing is the translation of your swagger annotations to a [FieldDescriptors][7]. This is the purpose of this contribution.
 It's also possible to generate asciidoctor files only that describe your model from custom annotation. 
 
-## Howto Generate adoc files from swagger annotations
+## Doc generation
+
+### Add dependencies to your pom
+
+```
+        <dependency>
+            <groupId>com.pconil.restdoc</groupId>
+            <artifactId>restdoc-annotation</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>`
+            <build>
+            ...
+                <plugins>
+                   <plugin>
+                        <groupId>com.pconil.restdoc</groupId>
+                        <artifactId>restdoc-helper-plugin</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                        <configuration>
+                            <sourceDir>${basedir}/target/classes/</sourceDir>
+                            <basePackageName>com.pconil.restdoc.model</basePackageName>
+                            <targetDir>${basedir}/target/</targetDir>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>generate</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>restdoc-helper</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.springframework</groupId>
+                                <artifactId>spring-web</artifactId>
+                                <version>4.3.3.RELEASE</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    ...
+        
+```
+
+### Howto Generate adoc files from swagger annotations
 
 As simple as adding @MustBeDocumented to your model class
 
@@ -35,7 +78,7 @@ public class ClassSwaggerDTO {
 ```
 
 
-## And If you don't use swagger or want to document classes that doesn't contain @ApiModelProperty
+### And If you don't use swagger or want to document classes that doesn't contain @ApiModelProperty
 
 Add a @AsciidocAnnotation to your fields
 
@@ -57,7 +100,7 @@ public class Class1DTO {
 
 ## Go further
 
-See the bundled springboot-sample to see how it works.
+See the springboot-sample to see how it works.
 
 ## Prerequisite
 
@@ -77,9 +120,8 @@ Contributors to this project agree to uphold its [code of conduct][11].
 
 There are several that you can contribute to restdoc-helper:
 
- - Open a [pull request][12]. Please see the [contributor guidelines][13] for details.
+ - Open a [pull request][12].
  - Ask and answer questions on Stack Overflow using the [`restdoc-helper`][15] tag.
- - Chat with fellow users [on Gitter][16].
 
 ## Licence
 
