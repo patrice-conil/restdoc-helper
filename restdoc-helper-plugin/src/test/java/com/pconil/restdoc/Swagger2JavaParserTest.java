@@ -18,29 +18,28 @@ package com.pconil.restdoc;
 import org.junit.Test;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test java generation from swagger ApiModelProperty.
  */
 public class Swagger2JavaParserTest {
-
+    public static final String PACKAGE = "com.pconil.restdoc";
+    public static final String ADOC_DIR = "target/generated-snippets";
+    public static final String JAVA_DIR = "target/generated-test-sources";
     /**
      * Generates java sources for classes in the com.pconil.restdoc.model package and checks the result.
      * @throws Exception if the result isn't the expected one
      */
     @Test
     public void generateJavaFromSwaggerAnnotation() throws Exception {
-        Swagger2JavaParser parser = new Swagger2JavaParser("com.pconil.restdoc", "target", "target/classes");
+        Swagger2JavaParser parser = new Swagger2JavaParser(PACKAGE, ADOC_DIR, JAVA_DIR, "target/classes");
         parser.parse();
         String filename = "./target/generated-test-sources/ClassSwaggerDTOFieldDescriptor.java";
         File java = new File(filename);
-        assertEquals(true, java.exists());
-        String expected = Utils.loadResource("ClassSwaggerDTOFieldDescriptor.java.expected").replace("\r","");
-        String result = new String(Files.readAllBytes(Paths.get(filename)), "UTF-8").replace("\r","");
-        assertEquals(expected, result);
+        File expected = new File("./src/test/resources/ClassSwaggerDTOFieldDescriptor.java.expected");
+        assertThat(java).exists();
+        assertThat(java).hasSameContentAs(expected);
     }
 }

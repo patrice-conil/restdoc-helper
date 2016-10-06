@@ -16,12 +16,12 @@
 package com.pconil.restdoc.model;
 
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
 
 /**
  * Test class.
  */
-@MustBeDocumented
+@InspectToDocument
 public class Class2DTO {
     @AsciidocAnnotation(description="field 1")
     private String field1;

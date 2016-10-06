@@ -18,7 +18,7 @@ package com.pconil.restdoc.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.net.URI;
@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * Object that 'summarize' a Program (light data).
  */
-@MustBeDocumented(description = "Electronic Program Guide Item")
+@InspectToDocument(description = "Electronic Program Guide Item")
 public class Program {
 
     /**

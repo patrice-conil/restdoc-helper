@@ -15,7 +15,7 @@
  */
 package com.pconil.restdoc;
 
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,103 +30,100 @@ import java.util.regex.Pattern;
 /**
  * This parser produces target/ClassName.restdoc files for all classes matching package-name or its subpackages.
  */
-@MustBeDocumented(description = "Parser used to generate restdoc files from swagger annotation")
-public  abstract class AbstractParser {
+@InspectToDocument(description = "Parser used to generate restdoc files from swagger annotation")
+abstract class AbstractParser {
 
 
     /**
      * The logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractParser.class);
-    
+
     /**
      * File where to write restdoc file.
      */
-    protected FileOutputStream adocFile = null;
+    FileOutputStream adocFile = null;
 
     /**
      * Java dir.
      */
-    protected String targetJavaDirName = null;
-    
-    /**
-     * Name of restdoc file to write.
-     */
-    protected String adocName = null;
+    String targetJavaDirName = null;
 
     /**
      * Directory where we want to put restdoc files.
      */
-    protected String targetAdocDirName = null;
+    String targetAdocDirName = null;
 
     /**
-     *  Directory that contains .class to parse.
+     * Directory that contains .class to parse.
      */
-    protected File sourceDir;
-
-    /**
-     * Directory where we want to put java file.
-     */
-    protected File targetJavaDir = null;
+    File sourceDir;
 
     /**
      * Directory where we want to put java file.
      */
-    protected File targetAdocDir = null;
-    
+    File targetJavaDir = null;
+
+    /**
+     * Directory where we want to put adoc file.
+     */
+    File targetAdocDir = null;
+
     /**
      * Package name.
      */
-    protected String packageName;
-    
+    String packageName;
+
     /**
-     * AsciiDocAnnotationParser Constructor.
+     * AbstractParser Constructor.
      *
      * @param packageName name of package that we want to parse
-     * @param target      project for which we want to generate restdoc and java files
+     * @param adocDirName project for which we want to generate restdoc and java files
+     * @param javaDirName project for which we want to generate restdoc and java files
      * @param source      directory where .class will be found
      * @throws ParserException if packageName is malformed or target creation isn't possible
      */
-    AbstractParser(String packageName, String target, String source) throws ParserException {
-        
+    AbstractParser(String packageName, String adocDirName, String javaDirName, String source) throws ParserException {
+
         this.packageName = packageName;
-        targetAdocDirName = target + "/generated-snippets/";
-        targetJavaDirName = target + "/generated-test-sources/";
-        
+        targetAdocDirName = adocDirName;
+        targetJavaDirName = javaDirName;
+
         targetJavaDir = new File(targetJavaDirName);
         targetAdocDir = new File(targetAdocDirName);
-        
+
         sourceDir = new File(source);
 
         if (!sourceDir.isDirectory()) {
-            throw new ParserException("Source dir is not a directory");
+            logErrorAndThrowParserException(String.format(" %s is not a directory", targetJavaDirName));
+
         }
-        if (!validatePackageName(packageName)) {
-            throw new ParserException("Invalid parameter found");
-        }
+        validatePackageName(packageName);
+
         if (!targetJavaDir.exists() && !targetJavaDir.mkdirs()) {
-            LOGGER.error("Can't create directory {} for java sources", targetJavaDirName);
-            throw new ParserException(String.format("Can't create file %s", targetJavaDirName));
+            logErrorAndThrowParserException(String.format("Can't create directory %s for java sources",
+                    targetJavaDirName));
         }
         if (!targetAdocDir.exists() && !targetAdocDir.mkdirs()) {
-            LOGGER.error("Can't create directory {} for restdoc files", targetAdocDirName);
-            throw new ParserException(String.format("Can't create file %s", targetAdocDirName));
+            logErrorAndThrowParserException(String.format("Can't create directory %s for restdoc files",
+                    targetAdocDirName));
         }
     }
 
 
     /**
-     * Parses packageName and its sub packages to generate Class.restdoc files for Class tagged @MustBeDocumented.
+     * Parses packageName and its sub packages to generate Class.restdoc files for Class tagged @InspectToDocument.
      * Class.restdoc files are generated in target/generated-snippet/com.pconil.restdoc.model targetJavaDir.
-     * @throws ParserException if we can't create Class.adhoc files in target/generated-snippets/com.pconil.restdoc.model.
+     *
+     * @throws ParserException if we can't create Class.adhoc files in target/generated-snippets/com.pconil.restdoc
+     *                         .model.
      */
-    public void parse() throws ParserException {
-        
+    void parse() throws ParserException {
+
         List<Class> classes;
         boolean hasDocumentedField;
-        
+
         ParserClassLoader classLoader = null;
-        FileOutputStream classFile = null;
 
         try {
             // Add source url to local classloader
@@ -135,7 +132,7 @@ public  abstract class AbstractParser {
 
             for (Class c : classes) {
                 LOGGER.debug("Parsing class {} to generate java code", c.getSimpleName());
-                if (c.isAnnotationPresent(MustBeDocumented.class)) {
+                if (c.isAnnotationPresent(InspectToDocument.class)) {
                     hasDocumentedField = false;
                     // Parse all fields declared in this class
                     initializeFields();
@@ -143,46 +140,52 @@ public  abstract class AbstractParser {
                         hasDocumentedField = parseField(c, field, hasDocumentedField);
                     }
                     if (hasDocumentedField) {
-                        completeField();
+                        completeFields();
                         completeClass();
-                        classFile = writeClass();
+                        writeClass();
+                    } else {
+                        LOGGER.debug(String.format("You declared your class %s as documented "
+                                                                      + "but there is no documented field in it",
+                                c.getSimpleName()));
                     }
                 }
             }
             classLoader.restoreLoader();
         } catch (ClassNotFoundException | IOException e) {
-            LOGGER.error("Class not found while parsing your model");
-            e.printStackTrace();
-        } finally {
-            try {
-                if (classFile != null) {
-                    classFile.flush();
-                    classFile.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            logErrorAndThrowParserException("Class not found while parsing your model");
         }
+    }
+
+    /**
+     * Logs the error message and send a ParserException.
+     *
+     * @param message the error message
+     */
+    protected void logErrorAndThrowParserException(String message) {
+        LOGGER.error(message);
+        throw new ParserException(message);
     }
 
     /**
      * Parses current field to check if it's a field to document.
      *
-     * @param c the class we're parsing
-     * @param field the current field to parse
-     * @param hasDocumented  tells if class c already have a documented field             
+     * @param c                the class we're parsing
+     * @param field            the current field to parse
+     * @param hasDocumentation tells if class c already have a documented field
      * @return hasDocumented || this field is documented
      */
-    protected abstract boolean parseField(Class c, Field field, boolean hasDocumented);
+    protected abstract boolean parseField(Class c, Field field, boolean hasDocumentation);
 
     /**
      * Initializes header(s) for fields.
+     *
      * @param c the classe for which we initialize field header
      */
     protected abstract void writeFieldStart(Class c);
 
     /**
      * Initializes info buffer for class c.
+     *
      * @param c the class we're parsing
      * @throws IOException if write failed
      */
@@ -190,13 +193,14 @@ public  abstract class AbstractParser {
 
     /**
      * Initializes writing for fields.
+     *
      * @throws IOException if something goes wrong with file creation
      */
     protected abstract void initializeFields() throws IOException;
-    
 
     /**
      * Generates the file.
+     *
      * @return the FileOutputStream if all is ok.
      */
     protected abstract FileOutputStream writeClass();
@@ -204,49 +208,48 @@ public  abstract class AbstractParser {
 
     /**
      * Ends class writing.
+     *
      * @throws IOException if write failed
      */
     protected abstract void completeClass() throws IOException;
 
     /**
      * Ends field writing.
+     *
      * @throws IOException if write failed
-     * */
-    protected abstract void completeField() throws IOException;
-    
-    
+     */
+    protected abstract void completeFields() throws IOException;
+
     /**
      * Check if packageName is well formed ... but not if its a java keyword.
+     *
      * @param packageName the name of the package to check
-     * @return true if packageName is well formed
+     * @throws ParserException if the package name is invalid
      */
-    static boolean validatePackageName(String packageName) {
+    private void validatePackageName(String packageName) throws ParserException {
         Pattern p = Pattern.compile("^[a-zA-Z_\\$][\\w\\$]*(?:\\.[a-zA-Z_\\$][\\w\\$]*)*$");
         if (!p.matcher(packageName).matches()) {
-            LOGGER.error("invalid package name: %s", packageName);
-            return false;
+            logErrorAndThrowParserException(String.format("invalid package name: %s", packageName));
         }
-        return true;
     }
-    
 
     /**
      * Create file targetDir/simpleName+suffix.
+     *
      * @param simpleName the class name
-     * @param targetDir the target directory 
-     * @param suffix the file suffix to add
+     * @param targetDir  the target directory
+     * @param suffix     the file suffix to add
      * @return a file descriptor
-     * @throws ParserException if the file creation fail
+     * @throws ParserException if creation fail
      */
     FileOutputStream createClassFile(String simpleName, String targetDir, String suffix) throws ParserException {
-        FileOutputStream file;
+        FileOutputStream file = null;
         String classFileName = targetDir + "/" + simpleName + suffix;
         try {
             file = new FileOutputStream(classFileName, false);
             LOGGER.debug("File {} created", classFileName);
         } catch (FileNotFoundException e) {
-            LOGGER.error("Can't create file %s", classFileName);
-            throw new ParserException(String.format("Can't create file %s", classFileName));
+            logErrorAndThrowParserException(String.format("Can't create file %s", classFileName));
         }
         return file;
     }

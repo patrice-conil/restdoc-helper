@@ -116,7 +116,6 @@ class ParserClassLoader {
                 classes.addAll(findClasses(current, dire, packageName));
             }
 
-            //List<Class> mesClasses = findClasses(cl, directory, "" );
             for (Class clazz : classes) {
                 LOGGER.debug("Found class {}", clazz.getSimpleName());
             }
@@ -149,7 +148,7 @@ class ParserClassLoader {
             if (file.isDirectory()) {
                 assert !file.getName().contains(".");
                 if ("".equals(packageName)) {
-                    classes.addAll(findClasses(cl, file, packageName + file.getName()));
+                    classes.addAll(findClasses(cl, file, file.getName()));
                 } else {
                     classes.addAll(findClasses(cl, file, packageName + "." + file.getName()));
                 }

@@ -40,11 +40,18 @@ public class RestdocMojo extends AbstractMojo {
     private String sourceDir;
 
     /**
-     * Where to find sources (including subdirs).
+     * Where to write adoc snippets.
      */
-    @Parameter(defaultValue = "target")
-    private String targetDir;
-
+    @Parameter(defaultValue = "target/generated-snippets")
+    private String adocDir;
+    
+    /**
+     * Where to write java sources.
+     */
+    @Parameter(defaultValue = "target/generated-test-sources")
+    private String javaDir;
+    
+    
     /**
      * Launches the parsers to generate restdoc and java files.
      * @throws MojoExecutionException if something goes wrong
@@ -52,11 +59,11 @@ public class RestdocMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         
         getLog().info("restdoc-helper starts with basePackageName=" + basePackageName + ", sourceDir=" + sourceDir 
-                      + ", targetDir=" + targetDir + "\n");
-        Swagger2JavaParser parser = new Swagger2JavaParser(basePackageName, targetDir, sourceDir);
+                      + ", adocDir=" + adocDir + ", javaDir=" + javaDir + "\n");
+        Swagger2JavaParser parser = new Swagger2JavaParser(basePackageName, adocDir, javaDir, sourceDir);
         parser.parse();
         
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(basePackageName, targetDir, sourceDir);
+        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(basePackageName, adocDir, javaDir, sourceDir);
         asciiDocAnnotationParser.parse();
         getLog().info("restdoc-helper ends.");
     }

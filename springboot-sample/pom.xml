@@ -257,7 +257,8 @@
                 <configuration>
                     <sourceDir>${basedir}/target/classes/</sourceDir>
                     <basePackageName>com.pconil.restdoc.model</basePackageName>
-                    <targetDir>${basedir}/target/</targetDir>
+                    <javaDir>${basedir}/target/generated-test-sources</javaDir>
+                    <adocDir>${basedir}/target/generated-snippets</adocDir>
                 </configuration>
                 <executions>
                     <execution>

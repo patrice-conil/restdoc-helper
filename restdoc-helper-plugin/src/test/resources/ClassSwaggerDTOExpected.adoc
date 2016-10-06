@@ -1,0 +1,22 @@
+[ClassSwaggerDTO]
+= ClassSwaggerDTO
+This is the Class1 description
+|===
+| Field| Type| Description| Constraints
+
+| field1
+| String
+| This is the field field1
+| required
+
+| field2
+| String
+| This is the optional field field2
+| optional
+
+| field3
+| String
+| This is the field field3
+| required
+|===
+

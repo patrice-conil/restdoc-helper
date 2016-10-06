@@ -16,7 +16,8 @@
 package com.pconil.restdoc;
 
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
+import io.swagger.annotations.ApiModelProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,34 +30,36 @@ import java.nio.charset.StandardCharsets;
 /**
  * This parser produces target/ClassName.restdoc files for all classes matching package-name or its subpackages.
  */
-@MustBeDocumented(description = "Parser used to generate restdoc files from swagger annotation")
+@InspectToDocument(description = "Parser used to generate restdoc files from swagger annotation")
 public class AsciiDocAnnotationParser extends AbstractParser {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsciidocAnnotation.class);
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsciiDocAnnotationParser.class);
+
 
     /**
      * AsciiDocAnnotationParser Constructor.
      *
-     * @param packageName name of package we want to parse
-     * @param target      project directory for which we want to generate restdoc files
+     * @param packageName name of package that we want to parse
+     * @param adocDirName project for which we want to generate restdoc and java files
+     * @param javaDirName project for which we want to generate restdoc and java files
      * @param source      directory where .class will be found
      * @throws ParserException if packageName is malformed or target creation isn't possible
      */
-    public AsciiDocAnnotationParser(String packageName, String target, String source) throws ParserException {
-        super(packageName, target, source);
+    public AsciiDocAnnotationParser(String packageName, String adocDirName, String javaDirName,
+                                    String source) throws ParserException {
+        super(packageName, adocDirName, javaDirName, source);
     }
 
     @Override
-    protected boolean parseField(Class c, Field field, boolean hasDocumented) {
+    protected boolean parseField(Class c, Field field, boolean hasDocumentation) {
         boolean isDocumented = false;
-        if (field.isAnnotationPresent(AsciidocAnnotation.class)) {
+        if (field.isAnnotationPresent(AsciidocAnnotation.class) || field.isAnnotationPresent(ApiModelProperty.class)) {
             try {
                 //Is it the first documented field of the class?
-                if (!hasDocumented)  {
+                if (!hasDocumentation) {
                     isDocumented = true;
                     writeClassStart(c);
                     writeFieldStart(c);
@@ -68,13 +71,15 @@ public class AsciiDocAnnotationParser extends AbstractParser {
                             c.getSimpleName(), field.getName());
                     if (anno instanceof AsciidocAnnotation) {
                         writeFieldInfo(field, anno, adocFile);
+                    } else if (anno instanceof ApiModelProperty) {
+                        writeFieldInfoForApiModelProperty(field, anno, adocFile);
                     }
                 }
             } catch (Throwable ex) {
                 ex.printStackTrace();
             }
         }
-        return hasDocumented || isDocumented;
+        return hasDocumentation || isDocumented;
     }
 
     @Override
@@ -100,16 +105,17 @@ public class AsciiDocAnnotationParser extends AbstractParser {
 
     @Override
     protected void completeClass() throws IOException {
-        
+
     }
 
     @Override
-    protected void completeField() throws IOException {
+    protected void completeFields() throws IOException {
         writeFieldFooter(adocFile);
     }
 
     /**
      * Write field footer to stream.
+     *
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
@@ -117,11 +123,12 @@ public class AsciiDocAnnotationParser extends AbstractParser {
         byte[] content = Constant.FIELD_FOOTER.getBytes(StandardCharsets.UTF_8);
         stream.write(content);
     }
-    
+
     /**
      * Writes Field informations contained in anno in restdoc file.
-     * @param field Field
-     * @param anno An AsciidocAnnotation
+     *
+     * @param field  Field
+     * @param anno   An AsciidocAnnotation
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
@@ -134,7 +141,25 @@ public class AsciiDocAnnotationParser extends AbstractParser {
     }
 
     /**
+     * Writes Field informations contained in anno in restdoc file.
+     *
+     * @param field  Field
+     * @param anno   An ApiModelProperty annotation
+     * @param stream file where to write
+     * @throws IOException If something goes wrong wile writing to file
+     */
+    private void writeFieldInfoForApiModelProperty(Field field, Annotation anno,
+                                                   FileOutputStream stream) throws IOException {
+        byte[] content = String.format(Constant.FIELD_FORMAT, field.getName(), field.getType().getSimpleName(),
+                ((ApiModelProperty) anno).value(), ((ApiModelProperty) anno).required() ? "required" : "optional")
+                .getBytes(StandardCharsets.UTF_8);
+        stream.write(content);
+        stream.flush();
+    }
+
+    /**
      * Writes Field header in restdoc file.
+     *
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
@@ -146,13 +171,14 @@ public class AsciiDocAnnotationParser extends AbstractParser {
 
     /**
      * Writes Class header in restdoc file.
-     * @param c class targeted
+     *
+     * @param c      class targeted
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
     private void writeClassHeader(Class c, FileOutputStream stream) throws IOException {
         byte[] content;
-        MustBeDocumented anno = (MustBeDocumented) c.getAnnotation(MustBeDocumented.class);
+        InspectToDocument anno = (InspectToDocument) c.getAnnotation(InspectToDocument.class);
         // Write class header
         if ("".equals(anno.description())) {
 

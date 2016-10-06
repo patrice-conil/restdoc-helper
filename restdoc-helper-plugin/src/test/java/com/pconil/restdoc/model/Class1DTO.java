@@ -16,12 +16,12 @@
 package com.pconil.restdoc.model;
 
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
 
 /**
  * Annotations to generate restdoc file from pojo classes.
  */
-@MustBeDocumented(description = "This is the Class1 description")
+@InspectToDocument(description = "This is the Class1 description")
 public class Class1DTO {
     @AsciidocAnnotation(description="This field describe name of Class1DTO", constraints = "Length must be between 4 and 6")
     String field1;

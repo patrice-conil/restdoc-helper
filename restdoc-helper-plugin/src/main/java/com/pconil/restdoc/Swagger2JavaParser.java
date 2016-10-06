@@ -57,25 +57,26 @@ public class Swagger2JavaParser extends AbstractParser {
     private FileOutputStream classFile = null;
 
     /**
-     * AsciiDocAnnotationParser Constructor.
+     * Swagger2JavaParser Constructor.
      *
      * @param packageName name of package that we want to parse
-     * @param target      project directory for which we want to generate restdoc files
+     * @param adocDirName project for which we want to generate restdoc and java files
+     * @param javaDirName project for which we want to generate restdoc and java files
      * @param source      directory where .class will be found
      * @throws ParserException if packageName is malformed or target creation isn't possible
      */
-    public Swagger2JavaParser(String packageName, String target, String source) throws ParserException {
-        super(packageName, target, source);
+    public Swagger2JavaParser(String packageName, String adocDirName, String javaDirName, String source) throws ParserException {
+        super(packageName, adocDirName, javaDirName, source);
     }
 
     @Override
-    protected boolean parseField(Class c, Field field, boolean hasDocumented) {
+    protected boolean parseField(Class c, Field field, boolean hasDocumentation) {
         boolean isDocumented = false;
         boolean firstField = false;
         if (field.isAnnotationPresent(ApiModelProperty.class)) {
             try {
                 //Is it the first documented field of the class?
-                if (!hasDocumented) {
+                if (!hasDocumentation) {
                     firstField = true;
                     isDocumented = true;
                     writeClassStart(c);
@@ -97,7 +98,7 @@ public class Swagger2JavaParser extends AbstractParser {
                 ex.printStackTrace();
             }
         }
-        return hasDocumented || isDocumented;
+        return hasDocumentation || isDocumented;
     }
 
     @Override
@@ -130,7 +131,7 @@ public class Swagger2JavaParser extends AbstractParser {
     }
 
     @Override
-    protected void completeField() throws IOException {
+    protected void completeFields() throws IOException {
         sbField.append(Constant.FIELD_END);
         sbListField.append(Constant.FIELD_END);
         writeFieldDescriptors(classFile, sbField.toString(), sbListField.toString());

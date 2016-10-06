@@ -16,7 +16,7 @@
 package com.pconil.restdoc.model;
 
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
-import com.pconil.restdoc.annotation.MustBeDocumented;
+import com.pconil.restdoc.annotation.InspectToDocument;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * SimilarContent describes a similar content as the one it refers to.
  */
-@MustBeDocumented(description = "SimilarContent describes a similar content as the one it refers to")
+@InspectToDocument(description = "SimilarContent describes a similar content as the one it refers to")
 class SimilarContent {
 
     /**

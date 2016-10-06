@@ -18,81 +18,117 @@ package com.pconil.restdoc;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.EnumSet;
+import java.util.Set;
 
-import static junit.framework.TestCase.assertEquals;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests AsciiDocAnnotationParser.
  */
 public class ParserTest {
 
+    public static final String PACKAGE = "com.pconil.restdoc";
+    public static final String ADOC_DIR = "target/generated-snippets";
+    public static final String JAVA_DIR = "target/generated-test-sources";
+
     /**
      * Parses java class that contains only description on its fields.
+     *
      * @throws Exception if something goes wrong
      */
     @Test
     public void parseClassWithDescription() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.pconil.restdoc", "target", "target/classes");
+        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+                "target/classes");
         asciiDocAnnotationParser.parse();
         String filename = "target/generated-snippets/Class1DTO.adoc";
         File adhoc = new File(filename);
-        assertEquals(true, adhoc.exists());
-        String expected = Utils.loadResource("Class1DTOExpected.adoc").replace("\r", "");
-        String result = new String(Files.readAllBytes(Paths.get(filename)), "UTF-8").replace("\r", "");
-        assertEquals(result, expected);
+        assertThat(adhoc).exists();
+        File expected = new File("./src/test/resources/Class1DTOExpected.adoc");
+        assertThat(adhoc).hasSameContentAs(expected);
     }
 
     /**
      * Parses java class that contains description and constraint on its fields.
+     *
      * @throws Exception if something goes wrong
      */
     @Test
     public void parseClassWithDescriptionAndConstraints() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.pconil.restdoc", "target", "target/classes");
+        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+                "target/classes");
         asciiDocAnnotationParser.parse();
         String filename = "target/generated-snippets/SimilarContent.adoc";
         File adhoc = new File(filename);
-        assertEquals(true, adhoc.exists());
-        String expected = Utils.loadResource("SimilarContent.adoc").replace("\r", "");
-        String result = new String(Files.readAllBytes(Paths.get(filename)), "UTF-8").replace("\r", "");
-        assertEquals(result, expected);
+        assertThat(adhoc).exists();
+        File expected = new File("./src/test/resources/SimilarContent.adoc");
+        assertThat(adhoc).hasSameContentAs(expected);
     }
 
     /**
      * Parses java class that contains no description.
+     *
      * @throws Exception if something goes wrong
      */
     @Test
     public void parseClassWithoutDescription() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser("com.pconil.restdoc", "target", "target/classes");
+        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+                "target/classes");
         asciiDocAnnotationParser.parse();
         String filename = "target/generated-snippets/Class2DTO.adoc";
         File adhoc = new File(filename);
-        assertEquals(true, adhoc.exists());
-        String expected = Utils.loadResource("Class2DTOExpected.adoc").replace("\r", "");
-        String result = new String(Files.readAllBytes(Paths.get(filename)), "UTF-8").replace("\r", "");
-        assertEquals(result, expected);
+        assertThat(adhoc).exists();
+        File expected = new File("./src/test/resources/Class2DTOExpected.adoc");
+        assertThat(adhoc).hasSameContentAs(expected);
+    }
+
+    /**
+     * Parses java class that contains swagger description.
+     *
+     * @throws Exception if something goes wrong
+     */
+    @Test
+    public void parseClassWithSwaggerAnnotationOnly() throws Exception {
+        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+                "target/classes");
+        asciiDocAnnotationParser.parse();
+        String filename = "target/generated-snippets/ClassSwaggerDTO.adoc";
+        File adhoc = new File(filename);
+        assertThat(adhoc).exists();
+        File expected = new File("./src/test/resources/ClassSwaggerDTOExpected.adoc");
+        assertThat(adhoc).hasSameContentAs(expected);
     }
 
     @Test(expected = ParserException.class)
     public void badPackageName() throws Exception {
-        new AsciiDocAnnotationParser("com.pconil/restdoc", "target", "target/classes");
+        new AsciiDocAnnotationParser("com.pconil/restdoc", ADOC_DIR, JAVA_DIR, "target/classes");
     }
-
-    @Test
-    public void badTargetName() throws Exception {
-        try {
-            new AsciiDocAnnotationParser("com.pconil.restdoc", "/bin", "target/classes");
-        } catch (ParserException e) {
-            assertEquals(e.getMessage(), "Can't create file /bin/generated-test-sources/");
-        }
-    }
+    
 
     @Test(expected = ParserException.class)
     public void unwritableTargetName() throws Exception {
-        new AsciiDocAnnotationParser("com.pconil.restdoc", "/Users", "target/classes");
+        createTmpDirWithoutWriteRight("target/unwritableDir");
+        new AsciiDocAnnotationParser(PACKAGE, "target/unwritableDir/test", "target/unwritableDir/test", "target/classes");
     }
 
+    /**
+     * Creates tmp dir that doesn't permit write access.
+     *
+     * @param name
+     */
+    private void createTmpDirWithoutWriteRight(String name) throws IOException {
+        Path path = Paths.get(name);
+        Set<PosixFilePermission> perms =
+                EnumSet.of(OWNER_READ);
+        Files.deleteIfExists(path);
+        Files.createFile(path, PosixFilePermissions.asFileAttribute(perms));
+    }
 }

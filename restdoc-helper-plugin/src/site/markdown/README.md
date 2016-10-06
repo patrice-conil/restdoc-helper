@@ -24,14 +24,15 @@ It's also possible to generate asciidoctor files only that describe your model f
             <build>
             ...
                 <plugins>
-                   <plugin>
+                    <plugin>
                         <groupId>com.pconil.restdoc</groupId>
                         <artifactId>restdoc-helper-plugin</artifactId>
                         <version>1.0-SNAPSHOT</version>
                         <configuration>
                             <sourceDir>${basedir}/target/classes/</sourceDir>
                             <basePackageName>com.pconil.restdoc.model</basePackageName>
-                            <targetDir>${basedir}/target/</targetDir>
+                            <javaDir>${basedir}/target/generated-test-sources</javaDir>
+                            <adocDir>${basedir}/target/generated-snippets</adocDir>
                         </configuration>
                         <executions>
                             <execution>
@@ -56,10 +57,10 @@ It's also possible to generate asciidoctor files only that describe your model f
 
 ### Howto Generate adoc files from swagger annotations
 
-As simple as adding @MustBeDocumented to your model class
+As simple as adding @InspectToDocument to your model class
 
 ```
-@MustBeDocumented(description = "This is the Class1 description")
+@InspectToDocument(description = "This is the Class1 description")
 public class ClassSwaggerDTO {
     @ApiModelProperty(required = true, value="This is the field field1")
     private String field1;
@@ -83,7 +84,7 @@ public class ClassSwaggerDTO {
 Add a @AsciidocAnnotation to your fields
 
 ```
-@MustBeDocumented(description = "This is the Class1 description")
+@InspectToDocument(description = "This is the Class1 description")
 public class Class1DTO {
     @AsciidocAnnotation(description="This field describe name of Class1DTO", constraints = "Length must be between 4 and 6")
     String field1;

@@ -23,13 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to tell AsciiDocAnnotationParser to generate Class.restdoc file for this class.
+ * Annotation used to tell AnnotationParser to generate Class.adoc file for this class.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface  MustBeDocumented {
+public @interface InspectToDocument {
     /**
      * Description of the class in restdoc corresponding file.
      * @return the description of the class
