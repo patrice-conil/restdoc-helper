@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <artifactId>test-mojo</artifactId>
+    <groupId>com.pconil.restdoc</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.pconil.restdoc</groupId>
+                <artifactId>restdoc-helper-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <sourceDir>${basedir}/target/classes/</sourceDir>
+                    <basePackageName>com.pconil.restdoc.model</basePackageName>
+                    <javaDir>${basedir}/target/generated-test-sources</javaDir>
+                    <adocDir>${basedir}/target/generated-snippets</adocDir>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>restdoc-helper</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-web</artifactId>
+                        <version>4.3.3.RELEASE</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

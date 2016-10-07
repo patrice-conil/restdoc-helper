@@ -1,0 +1,26 @@
+= Live API Getting Started Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[introduction]
+= Introduction
+    Live API is a RESTful microservice to retrieve data from TV Live Domain (Channels, Programs and so on)
+
+[[com.pconil.restdoc.model]]
+= Models
+Object models used to describe resources
+
+:leveloffset: +1
+include::{snippets}/Class1DTO.adoc[]
+include::{snippets}/Class2DTO.adoc[]
+
+include::{snippets}/SimilarContent.adoc[]
+
+:leveloffset: -1
+
+
+

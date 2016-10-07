@@ -1,0 +1,16 @@
+[Class2DTO]
+= Class2DTO
+|===
+| Field| Type| Description| Constraints
+
+| field1
+| String
+| field 1
+| 
+
+| field2
+| String
+| field 2
+| 
+|===
+

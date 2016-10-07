@@ -1,0 +1,47 @@
+[SimilarContent]
+= SimilarContent
+SimilarContent describes a similar content as the one it refers to
+|===
+| Field| Type| Description| Constraints
+
+| title
+| String
+| Title
+| 
+
+| id
+| String
+| Content identifier
+| 
+
+| offerId
+| String
+| Offer identifier
+| 
+
+| serviceType
+| String
+| Type of service
+| 
+
+| contentType
+| String
+| Type of content
+| 
+
+| similarity
+| String
+| Type of similarity see <<com.pconil.restdoc.model-SimilarityEnum>>
+| 
+
+| csaLevel
+| Integer
+| CSA Level
+| between 1 and 5
+
+| images
+| List
+| Available images
+| 
+|===
+
