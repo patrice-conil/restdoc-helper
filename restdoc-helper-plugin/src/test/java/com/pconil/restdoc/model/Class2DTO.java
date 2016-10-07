@@ -20,6 +20,8 @@ import com.pconil.restdoc.annotation.InspectToDocument;
 
 /**
  * Test class.
+ * 
+ * @author  patrice_conil
  */
 @InspectToDocument
 public class Class2DTO {

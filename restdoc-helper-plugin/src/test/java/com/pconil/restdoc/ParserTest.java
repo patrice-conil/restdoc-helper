@@ -31,7 +31,9 @@ import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests AsciiDocAnnotationParser.
+ * Tests Annotation2AsciiDocParser.
+ * 
+ * @author  patrice_conil
  */
 public class ParserTest {
 
@@ -46,9 +48,9 @@ public class ParserTest {
      */
     @Test
     public void parseClassWithDescription() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(PACKAGE, ADOC_DIR, JAVA_DIR,
                 "target/classes");
-        asciiDocAnnotationParser.parse();
+        annotation2AsciiDocParser.parse();
         String filename = "target/generated-snippets/Class1DTO.adoc";
         File adhoc = new File(filename);
         assertThat(adhoc).exists();
@@ -63,9 +65,9 @@ public class ParserTest {
      */
     @Test
     public void parseClassWithDescriptionAndConstraints() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(PACKAGE, ADOC_DIR, JAVA_DIR,
                 "target/classes");
-        asciiDocAnnotationParser.parse();
+        annotation2AsciiDocParser.parse();
         String filename = "target/generated-snippets/SimilarContent.adoc";
         File adhoc = new File(filename);
         assertThat(adhoc).exists();
@@ -80,9 +82,9 @@ public class ParserTest {
      */
     @Test
     public void parseClassWithoutDescription() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(PACKAGE, ADOC_DIR, JAVA_DIR,
                 "target/classes");
-        asciiDocAnnotationParser.parse();
+        annotation2AsciiDocParser.parse();
         String filename = "target/generated-snippets/Class2DTO.adoc";
         File adhoc = new File(filename);
         assertThat(adhoc).exists();
@@ -97,9 +99,9 @@ public class ParserTest {
      */
     @Test
     public void parseClassWithSwaggerAnnotationOnly() throws Exception {
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(PACKAGE, ADOC_DIR, JAVA_DIR,
                 "target/classes");
-        asciiDocAnnotationParser.parse();
+        annotation2AsciiDocParser.parse();
         String filename = "target/generated-snippets/ClassSwaggerDTO.adoc";
         File adhoc = new File(filename);
         assertThat(adhoc).exists();
@@ -109,14 +111,14 @@ public class ParserTest {
 
     @Test(expected = ParserException.class)
     public void badPackageName() throws Exception {
-        new AsciiDocAnnotationParser("com.pconil/restdoc", ADOC_DIR, JAVA_DIR, "target/classes");
+        new Annotation2AsciiDocParser("com.pconil/restdoc", ADOC_DIR, JAVA_DIR, "target/classes");
     }
     
 
     @Test(expected = ParserException.class)
     public void unwritableTargetName() throws Exception {
         createTmpDirWithoutWriteRight("target/unwritableDir");
-        new AsciiDocAnnotationParser(PACKAGE, "target/unwritableDir/test", "target/unwritableDir/test", "target/classes");
+        new Annotation2AsciiDocParser(PACKAGE, "target/unwritableDir/test", "target/unwritableDir/test", "target/classes");
     }
 
     /**

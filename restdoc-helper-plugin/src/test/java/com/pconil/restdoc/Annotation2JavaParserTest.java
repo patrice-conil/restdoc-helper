@@ -23,8 +23,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test java generation from swagger ApiModelProperty.
+ * 
+ * @author  patrice_conil
  */
-public class Swagger2JavaParserTest {
+public class Annotation2JavaParserTest {
     public static final String PACKAGE = "com.pconil.restdoc";
     public static final String ADOC_DIR = "target/generated-snippets";
     public static final String JAVA_DIR = "target/generated-test-sources";
@@ -33,12 +35,21 @@ public class Swagger2JavaParserTest {
      * @throws Exception if the result isn't the expected one
      */
     @Test
-    public void generateJavaFromSwaggerAnnotation() throws Exception {
-        Swagger2JavaParser parser = new Swagger2JavaParser(PACKAGE, ADOC_DIR, JAVA_DIR, "target/classes");
+    public void generateJavaFromAnnotation() throws Exception {
+        Annotation2JavaParser parser = new Annotation2JavaParser(PACKAGE, ADOC_DIR, JAVA_DIR, "target/classes");
         parser.parse();
+        
+        //Verify generation from ApiModelProperty annotation
         String filename = "./target/generated-test-sources/ClassSwaggerDTOFieldDescriptor.java";
         File java = new File(filename);
         File expected = new File("./src/test/resources/ClassSwaggerDTOFieldDescriptor.java.expected");
+        assertThat(java).exists();
+        assertThat(java).hasSameContentAs(expected);
+
+        //Verify generation from AsciidocAnnotation annotation
+        filename = "./target/generated-test-sources/ClassWithoutApiModelPropertyFieldDescriptor.java";
+        java = new File(filename);
+        expected = new File("./src/test/resources/ClassWithoutApiModelPropertyFieldDescriptor.java.expected");
         assertThat(java).exists();
         assertThat(java).hasSameContentAs(expected);
     }

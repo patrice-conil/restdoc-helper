@@ -22,6 +22,8 @@ import java.util.List;
 
 /**
  * Interface that services must implement to comply with controller.
+ * 
+ * @author  patrice_conil
  */
 public interface ProgramsService {
 

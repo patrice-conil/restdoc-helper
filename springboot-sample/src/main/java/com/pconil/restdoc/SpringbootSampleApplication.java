@@ -23,6 +23,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Spring Boot Application class.
+ * 
+ * @author  patrice_conil
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.pconil.restdoc")

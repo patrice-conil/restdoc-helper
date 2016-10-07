@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 /**
  * Performs exception handling globally. The exceptions below could be raised by any
  * controller and they would be handled here, if not handled in the controller.
+ * 
+ * @author  patrice_conil
  */
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {

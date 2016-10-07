@@ -24,6 +24,8 @@ import java.nio.file.Paths;
 
 /**
  * Utilities.
+ * 
+ * @author  patrice_conil
  */
 public class Utils {
 

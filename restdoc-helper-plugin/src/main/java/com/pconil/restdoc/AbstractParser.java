@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 
 /**
  * This parser produces target/ClassName.restdoc files for all classes matching package-name or its subpackages.
+ * 
+ * @author  patrice_conil
  */
 @InspectToDocument(description = "Parser used to generate restdoc files from swagger annotation")
 abstract class AbstractParser {

@@ -20,6 +20,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Annotations to generate restdoc file from pojo classes.
+ * 
+ * @author  patrice_conil
  */
 @InspectToDocument(description = "This is the Class1 description")
 public class ClassSwaggerDTO {

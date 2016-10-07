@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to tell AnnotationParser to generate Class.adoc file for this class.
+ * @author  patrice_conil
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

@@ -23,6 +23,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Generate restdoc files and java fieldDescriptor classes.
+ * 
+ * @author  patrice_conil
  */
 @Mojo(name = "restdoc-helper")
 public class RestdocMojo extends AbstractMojo {
@@ -60,11 +62,11 @@ public class RestdocMojo extends AbstractMojo {
         
         getLog().info("restdoc-helper starts with basePackageName=" + basePackageName + ", sourceDir=" + sourceDir 
                       + ", adocDir=" + adocDir + ", javaDir=" + javaDir + "\n");
-        Swagger2JavaParser parser = new Swagger2JavaParser(basePackageName, adocDir, javaDir, sourceDir);
+        Annotation2JavaParser parser = new Annotation2JavaParser(basePackageName, adocDir, javaDir, sourceDir);
         parser.parse();
         
-        AsciiDocAnnotationParser asciiDocAnnotationParser = new AsciiDocAnnotationParser(basePackageName, adocDir, javaDir, sourceDir);
-        asciiDocAnnotationParser.parse();
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(basePackageName, adocDir, javaDir, sourceDir);
+        annotation2AsciiDocParser.parse();
         getLog().info("restdoc-helper ends.");
     }
 

@@ -15,6 +15,7 @@
  */
 package com.pconil.restdoc;
 
+import com.pconil.restdoc.annotation.AsciidocAnnotation;
 import io.swagger.annotations.ApiModelProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +26,21 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 
+import static com.pconil.restdoc.Constant.IN_LIST;
+import static com.pconil.restdoc.Constant.OUT_OF_LIST;
+
 
 /**
  * This parser produces target/ClassName.restdoc files for all classes matching package-name or its subpackages.
+ * 
+ * @author  patrice_conil
  */
-public class Swagger2JavaParser extends AbstractParser {
+public class Annotation2JavaParser extends AbstractParser {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(Swagger2JavaParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Annotation2JavaParser.class);
 
     /**
      * Used to construct field information.
@@ -57,7 +63,7 @@ public class Swagger2JavaParser extends AbstractParser {
     private FileOutputStream classFile = null;
 
     /**
-     * Swagger2JavaParser Constructor.
+     * Annotation2JavaParser Constructor.
      *
      * @param packageName name of package that we want to parse
      * @param adocDirName project for which we want to generate restdoc and java files
@@ -65,7 +71,7 @@ public class Swagger2JavaParser extends AbstractParser {
      * @param source      directory where .class will be found
      * @throws ParserException if packageName is malformed or target creation isn't possible
      */
-    public Swagger2JavaParser(String packageName, String adocDirName, String javaDirName, String source) throws ParserException {
+    public Annotation2JavaParser(String packageName, String adocDirName, String javaDirName, String source) throws ParserException {
         super(packageName, adocDirName, javaDirName, source);
     }
 
@@ -73,7 +79,7 @@ public class Swagger2JavaParser extends AbstractParser {
     protected boolean parseField(Class c, Field field, boolean hasDocumentation) {
         boolean isDocumented = false;
         boolean firstField = false;
-        if (field.isAnnotationPresent(ApiModelProperty.class)) {
+        if (field.isAnnotationPresent(ApiModelProperty.class) || field.isAnnotationPresent(AsciidocAnnotation.class)) {
             try {
                 //Is it the first documented field of the class?
                 if (!hasDocumentation) {
@@ -89,8 +95,12 @@ public class Swagger2JavaParser extends AbstractParser {
                             anno.annotationType().getSimpleName(),
                             c.getSimpleName(), field.getName());
                     if (anno instanceof ApiModelProperty) {
-                        sbField.append(writeFieldInfo(field, anno, firstField, false));
-                        sbListField.append(writeFieldInfo(field, anno, firstField, true));
+                        sbField.append(writeFieldInfo(field, (ApiModelProperty) anno, firstField, OUT_OF_LIST));
+                        sbListField.append(writeFieldInfo(field, (ApiModelProperty) anno, firstField, IN_LIST));
+                        firstField = false;
+                    } else if (anno instanceof AsciidocAnnotation) {
+                        sbField.append(writeFieldInfo(field, (AsciidocAnnotation) anno, firstField, OUT_OF_LIST));
+                        sbListField.append(writeFieldInfo(field, (AsciidocAnnotation) anno, firstField, IN_LIST));
                         firstField = false;
                     }
                 }
@@ -172,7 +182,7 @@ public class Swagger2JavaParser extends AbstractParser {
      * @throws IOException If something goes wrong wile writing to file
      * @return the string completed with field info
      */
-    private String writeFieldInfo(Field field, Annotation anno, boolean first, boolean list) throws IOException {
+    private String writeFieldInfo(Field field, ApiModelProperty anno, boolean first, boolean list) throws IOException {
         String fieldName;
         String content = "";
 
@@ -196,5 +206,38 @@ public class Swagger2JavaParser extends AbstractParser {
         return content;
     }
 
+    /**
+     * Construct field info.
+     *
+     * @param field Field
+     * @param anno  An AsciidocAnnotation annotation
+     * @param first is it the first documented field of the class ? 
+     * @param list are we writing for list retrieval ?
+     * @throws IOException If something goes wrong wile writing to file
+     * @return the string completed with field info
+     */
+    private String writeFieldInfo(Field field, AsciidocAnnotation anno, boolean first, boolean list) throws IOException {
+        String fieldName;
+        String content = "";
+
+        // We prefix the name with "[]." in case of list to comply with restdoc behavior.
+        if (list) {
+            fieldName = "[]." + field.getName();
+        } else {
+            fieldName = field.getName();
+        }
+
+        // If it is not the first field we need to write separator.
+        if (!first) {
+            content += Constant.FIELD_SEPARATOR;
+        }
+        // This is a required field
+        if ( anno.required() ) {
+            content += String.format(Constant.REQUIRED_FIELD_FORMAT, fieldName,  anno.description());
+        } else {
+            content += String.format(Constant.OPTIONAL_FIELD_FORMAT, fieldName,  anno.description());
+        }
+        return content;
+    }
 
 }

@@ -29,6 +29,8 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Mojo execution test.
+ * 
+ * @author  patrice_conil
  */
 @RunWith(JUnit4.class)
 public class RestdocMojoTest {

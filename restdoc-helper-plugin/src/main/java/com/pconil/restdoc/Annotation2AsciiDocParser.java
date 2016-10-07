@@ -29,18 +29,20 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * This parser produces target/ClassName.restdoc files for all classes matching package-name or its subpackages.
+ * 
+ * @author  patrice_conil
  */
 @InspectToDocument(description = "Parser used to generate restdoc files from swagger annotation")
-public class AsciiDocAnnotationParser extends AbstractParser {
+public class Annotation2AsciiDocParser extends AbstractParser {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsciiDocAnnotationParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Annotation2AsciiDocParser.class);
 
 
     /**
-     * AsciiDocAnnotationParser Constructor.
+     * Annotation2AsciiDocParser Constructor.
      *
      * @param packageName name of package that we want to parse
      * @param adocDirName project for which we want to generate restdoc and java files
@@ -48,8 +50,8 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      * @param source      directory where .class will be found
      * @throws ParserException if packageName is malformed or target creation isn't possible
      */
-    public AsciiDocAnnotationParser(String packageName, String adocDirName, String javaDirName,
-                                    String source) throws ParserException {
+    public Annotation2AsciiDocParser(String packageName, String adocDirName, String javaDirName,
+                                     String source) throws ParserException {
         super(packageName, adocDirName, javaDirName, source);
     }
 
@@ -70,9 +72,9 @@ public class AsciiDocAnnotationParser extends AbstractParser {
                             anno.annotationType().getSimpleName(),
                             c.getSimpleName(), field.getName());
                     if (anno instanceof AsciidocAnnotation) {
-                        writeFieldInfo(field, anno, adocFile);
+                        writeFieldInfo(field, (AsciidocAnnotation) anno, adocFile);
                     } else if (anno instanceof ApiModelProperty) {
-                        writeFieldInfoForApiModelProperty(field, anno, adocFile);
+                        writeFieldInfo(field, (ApiModelProperty) anno, adocFile);
                     }
                 }
             } catch (Throwable ex) {
@@ -132,9 +134,9 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
-    private void writeFieldInfo(Field field, Annotation anno, FileOutputStream stream) throws IOException {
+    private void writeFieldInfo(Field field, AsciidocAnnotation anno, FileOutputStream stream) throws IOException {
         byte[] content = String.format(Constant.FIELD_FORMAT, field.getName(), field.getType().getSimpleName(),
-                ((AsciidocAnnotation) anno).description(), ((AsciidocAnnotation) anno).constraints())
+                 anno.description(), anno.constraints())
                 .getBytes(StandardCharsets.UTF_8);
         stream.write(content);
         stream.flush();
@@ -148,10 +150,10 @@ public class AsciiDocAnnotationParser extends AbstractParser {
      * @param stream file where to write
      * @throws IOException If something goes wrong wile writing to file
      */
-    private void writeFieldInfoForApiModelProperty(Field field, Annotation anno,
+    private void writeFieldInfo(Field field, ApiModelProperty anno,
                                                    FileOutputStream stream) throws IOException {
         byte[] content = String.format(Constant.FIELD_FORMAT, field.getName(), field.getType().getSimpleName(),
-                ((ApiModelProperty) anno).value(), ((ApiModelProperty) anno).required() ? "required" : "optional")
+                anno.value(), anno.required() ? "required" : "optional")
                 .getBytes(StandardCharsets.UTF_8);
         stream.write(content);
         stream.flush();

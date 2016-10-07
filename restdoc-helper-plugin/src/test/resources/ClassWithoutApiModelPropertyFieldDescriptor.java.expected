@@ -1,0 +1,51 @@
+package com.pconil.restdoc;
+
+import org.springframework.restdocs.payload.FieldDescriptor; 
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+
+public class ClassWithoutApiModelPropertyFieldDescriptor {
+    public static FieldDescriptor[] fdClassWithoutApiModelProperty = new FieldDescriptor[] {
+        fieldWithPath("id").description("Program identifier"),
+        fieldWithPath("programType").description("Program type"),
+        fieldWithPath("title").description("Program title"),
+        fieldWithPath("channelId").description("Id of channel broadcasting this program"),
+        fieldWithPath("diffusionDate").description("Diffusion date in seconds"),
+        fieldWithPath("duration").description("Program duration in second"),
+        fieldWithPath("csa").description("Program CSA level"),
+        fieldWithPath("kind").description("Kind of program (ex: comedy)"),
+        fieldWithPath("kindDetailed").description("More detailed kind (e.g Comedy-drama)"),
+        fieldWithPath("synopsis").description("Program sysnopsis"),
+        fieldWithPath("languageVersion").description("Program language"),
+        fieldWithPath("hearingImpaired").description("Indicates if the program has some hearing-impaired subtitle"),
+        fieldWithPath("audioDescription").description("Indicates if the program has an audio description track"),
+        fieldWithPath("season").description("If the type of the program is EPISODE, gives the season number"),
+        fieldWithPath("episodeNumber").description("If the type of the program is EPISODE, gives the position of the episode in the season"),
+        fieldWithPath("definition").description("Program definition"),
+        fieldWithPath("links").description("List of links which points to entities in relation with the current program"),
+        fieldWithPath("dayPart").description("Part of day when program start"),
+        fieldWithPath("catchupId").description("Identifier of the catchup program related to this live program")    };
+
+
+    public static FieldDescriptor[] fdClassWithoutApiModelPropertyList = new FieldDescriptor[] {
+        fieldWithPath("[].id").description("Program identifier"),
+        fieldWithPath("[].programType").description("Program type"),
+        fieldWithPath("[].title").description("Program title"),
+        fieldWithPath("[].channelId").description("Id of channel broadcasting this program"),
+        fieldWithPath("[].diffusionDate").description("Diffusion date in seconds"),
+        fieldWithPath("[].duration").description("Program duration in second"),
+        fieldWithPath("[].csa").description("Program CSA level"),
+        fieldWithPath("[].kind").description("Kind of program (ex: comedy)"),
+        fieldWithPath("[].kindDetailed").description("More detailed kind (e.g Comedy-drama)"),
+        fieldWithPath("[].synopsis").description("Program sysnopsis"),
+        fieldWithPath("[].languageVersion").description("Program language"),
+        fieldWithPath("[].hearingImpaired").description("Indicates if the program has some hearing-impaired subtitle"),
+        fieldWithPath("[].audioDescription").description("Indicates if the program has an audio description track"),
+        fieldWithPath("[].season").description("If the type of the program is EPISODE, gives the season number"),
+        fieldWithPath("[].episodeNumber").description("If the type of the program is EPISODE, gives the position of the episode in the season"),
+        fieldWithPath("[].definition").description("Program definition"),
+        fieldWithPath("[].links").description("List of links which points to entities in relation with the current program"),
+        fieldWithPath("[].dayPart").description("Part of day when program start"),
+        fieldWithPath("[].catchupId").description("Identifier of the catchup program related to this live program")    };
+
+
+}

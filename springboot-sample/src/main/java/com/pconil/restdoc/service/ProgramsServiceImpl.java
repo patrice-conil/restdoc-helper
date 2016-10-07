@@ -24,6 +24,8 @@ import java.util.List;
 
 /**
  * Service that retrieves program resources.
+ * 
+ * @author  patrice_conil
  */
 @Service("programsService")
 public class ProgramsServiceImpl implements ProgramsService {

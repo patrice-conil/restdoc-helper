@@ -17,6 +17,8 @@ package com.pconil.restdoc.exception;
 
 /**
  * Sample com.pconil.restdoc.exception to show how exceptionHandling works.
+ * 
+ * @author  patrice_conil
  */
 public class SampleException extends RuntimeException {
 

@@ -11,7 +11,7 @@ SimilarContent describes a similar content as the one it refers to
 
 | id
 | String
-| Content identifier : the content identifier depends on its contentType. For MOVIE contentType, id is a videoId (aka externalAssetId in RTV). For SEASON contentType, id is a seasonId (aka serieId in RTV)
+| Content identifier
 | 
 
 | offerId
@@ -21,12 +21,12 @@ SimilarContent describes a similar content as the one it refers to
 
 | serviceType
 | String
-| Type of com.pconil.restdoc.service see <<com.pconil.restdoc.model-ServiceTypeEnum>>
+| Type of service
 | 
 
 | contentType
 | String
-| Type of content see <<com.pconil.restdoc.model-ContentTypeEnum>>
+| Type of content
 | 
 
 | similarity
@@ -41,7 +41,7 @@ SimilarContent describes a similar content as the one it refers to
 
 | images
 | List
-| Available images see <<com.pconil.restdoc.model-Image>>
+| Available images
 | 
 |===
 

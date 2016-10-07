@@ -16,10 +16,8 @@
 package com.pconil.restdoc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pconil.restdoc.annotation.AsciidocAnnotation;
 import com.pconil.restdoc.annotation.InspectToDocument;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -27,167 +25,127 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Object that 'summarize' a Program (light data).
+ * Object that 'summarize' a Program.
  * 
  * @author  patrice_conil
  */
 @InspectToDocument(description = "Electronic Program Guide Item")
-public class Program {
+public class ClassWithoutApiModelProperty {
 
     /**
      * Program identifier.
      */
-    @AsciidocAnnotation(description = "Program identifier")
-    @ApiModelProperty(required = true, value = "Program identifier")
-    @JsonProperty("id")
+    @AsciidocAnnotation(description = "Program identifier", required = true)
     private String id = null;
 
     /**
      * Program type.
      */
-    @AsciidocAnnotation(description = "Program type")
-    @ApiModelProperty(required = true, value = "Program type")
-    @JsonProperty("programType")
+    @AsciidocAnnotation(description = "Program type", required = true)
     private String programType = null;
 
     /**
      * Program title.
      */
-    @AsciidocAnnotation(description = "Program title")
-    @ApiModelProperty(required = true, value = "Program title")
-    @JsonProperty("title")
+    @AsciidocAnnotation(description = "Program title", required = true)
     private String title = null;
 
     /**
      * Id of channel broadcasting this program.
      */
-    @AsciidocAnnotation(description = "Id of channel broadcasting this program")
-    @ApiModelProperty(required = true, value = "Identifier of the channel where the program is broadcasted")
-    @JsonProperty("channelId")
+    @AsciidocAnnotation(description = "Id of channel broadcasting this program", required = true)
     private String channelId = null;
 
     /**
      * Diffusion date in seconds.
      */
-    @AsciidocAnnotation(description = "Diffusion date in seconds")
-    @ApiModelProperty(required = true, value = "Diffusion date in seconds")
-    @JsonProperty("diffusionDate")
+    @AsciidocAnnotation(description = "Diffusion date in seconds", required = true)
     private Long diffusionDate = null;
 
     /**
      * Program duration in second.
      */
-    @AsciidocAnnotation(description = "Program duration in second")
-    @ApiModelProperty(required = true, value = "Duration in seconds")
-    @JsonProperty("duration")
+    @AsciidocAnnotation(description = "Program duration in second", required = true)
     private Long duration = null;
 
     /**
      * Program CSA level.
      */
-    @AsciidocAnnotation(description = "Program CSA level")
-    @ApiModelProperty(required = true, value = "Audience maturity level")
-    @JsonProperty("csa")
+    @AsciidocAnnotation(description = "Program CSA level", required = true)
     private Long csa = null; 
 
     /**
      * Kind of program (ex: variety).
      */
-    @AsciidocAnnotation(description = "Kind of program (ex: comedy)")
-    @ApiModelProperty(required = true, value = "Program kind (e.g Comedy)")
-    @JsonProperty("kind")
+    @AsciidocAnnotation(description = "Kind of program (ex: comedy)", required = true)
     private String kind = null;
 
     /**
      * More detailed kind (e.g Comedy-drama).
      */
-    @AsciidocAnnotation(description = "More detailed kind (e.g Comedy-drama)")
-    @ApiModelProperty(required = true, value = "More detailed kind (e.g Comedy-drama)")
-    @JsonProperty("kindDetailed")
+    @AsciidocAnnotation(description = "More detailed kind (e.g Comedy-drama)", required = true)
     private String kindDetailed = null;
 
     /**
      * Program sysnopsis.
      */
-    @AsciidocAnnotation(description = "Program sysnopsis")
-    @ApiModelProperty(required = true, value = "Program synopsis")
-    @JsonProperty("synopsis")
+    @AsciidocAnnotation(description = "Program sysnopsis", required = true)
     private String synopsis = null;
 
     /**
      * Program language.
      */
-    @AsciidocAnnotation(description = "Program language")
-    @ApiModelProperty(required = true, value = "Program language")
-    @JsonProperty("languageVersion")
+    @AsciidocAnnotation(description = "Program language", required = true)
     private String languageVersion = null;
 
     /**
      * Indicates if the program has some hearing-impaired subtitle.
      */
-    @AsciidocAnnotation(description = "Indicates if the program has some hearing-impaired subtitle")
-    @ApiModelProperty(required = true, value = "Indicates if the program has some hearing-impaired subtitle")
-    @JsonProperty("hearingImpaired")
+    @AsciidocAnnotation(description = "Indicates if the program has some hearing-impaired subtitle", required = true)
     private Boolean hearingImpaired = null;
 
     /**
      * Indicates if the program has an audio description track.
      */
-    @ApiModelProperty(required = true, value = "Indicates if the program has an audio description track")
-    @JsonProperty("audioDescription")
-    @AsciidocAnnotation(description = "Indicates if the program has an audio description track")
+    @AsciidocAnnotation(description = "Indicates if the program has an audio description track", required = true)
     private Boolean audioDescription = null;
 
     /**
      * If the type of the program is EPISODE, gives the season number.
      */
-    @AsciidocAnnotation(description = "If the type of the program is EPISODE, gives the season number")
-    @ApiModelProperty(required = true, value = "If the type of the program is EPISODE, gives the season number")
-    @JsonProperty("season")
+    @AsciidocAnnotation(description = "If the type of the program is EPISODE, gives the season number", required = true)
     private Long season = null;
 
     /**
      * If the type of the program is EPISODE, gives the position of the episode in the season.
      */
     @AsciidocAnnotation(description = "If the type of the program is EPISODE, gives the position of the episode in "
-                                      + "the season")
-    @ApiModelProperty(required = true, value = "if the type of the program is EPISODE, gives the position of the episode"
-                                               + "in the season")
-    @JsonProperty("episodeNumber")
+                                      + "the season", required = true)
     private String episodeNumber = null;
 
     /**
      * Program definition.
      */
-    @AsciidocAnnotation(description = "Program definition")
-    @ApiModelProperty(required = true, value = "Program definition", allowableValues = "SD, HD")
-    @JsonProperty("definition")
+    @AsciidocAnnotation(description = "Program definition", required = true, constraints = "SD or HD")
     private String definition = null;
 
     /**
      * List of links which points to entity in relation with the current program.
      */
-    @AsciidocAnnotation(description = "List of <<com.pconil.restdoc.model-Link, links>> which points to entity in relation with"
-                                      + " the current program")
-    @ApiModelProperty(required = true, value = "List of links which points to entity in relation with the current program")
-    @JsonProperty("links")
+    @AsciidocAnnotation(description = "List of links which points to entities in relation with"
+                                      + " the current program", required = true)
     private List<URI> links = new ArrayList<>();
 
     /**
      * Part of day when program is broadcast(ed).
      */
-    @AsciidocAnnotation(description = "Part of day when program start")
-    @ApiModelProperty(required = true, value = "Part of day when program start, PT for prime time",
-            allowableValues = "PT1, PT2, PT3, OTHER")
-    @JsonProperty("dayPart")
+    @AsciidocAnnotation(description = "Part of day when program start", required = true, constraints = "PT1, PT2, PT3, OTHER")
     private String dayPart = null;
 
     /**
      * Identifier of the catchup program related to this live program.
      */
-    @AsciidocAnnotation(description = "Identifier of the catchup program related to this live program")
-    @ApiModelProperty(required = true, value = "Identifier of the catchup program related to this live program")
-    @JsonProperty("catchupId")
+    @AsciidocAnnotation(description = "Identifier of the catchup program related to this live program", required = true)
     private String catchupId = null;
 
 
@@ -197,14 +155,14 @@ public class Program {
      */
     @SuppressWarnings("all")
     @JsonIgnore
-    public Program(String id, String programType, String title, String channelId,
-                        Long diffusionDate, Long duration, Long csa, String kind, String kindDetailed,
-                        String synopsis,
-                        String languageVersion, Boolean hearingImpaired, Boolean audioDescription,
-                        Long season,
-                        String episodeNumber, String definition, List<URI> links,
-                        String dayPart,
-                        String catchupId) {
+    public ClassWithoutApiModelProperty(String id, String programType, String title, String channelId,
+                                        Long diffusionDate, Long duration, Long csa, String kind, String kindDetailed,
+                                        String synopsis,
+                                        String languageVersion, Boolean hearingImpaired, Boolean audioDescription,
+                                        Long season,
+                                        String episodeNumber, String definition, List<URI> links,
+                                        String dayPart,
+                                        String catchupId) {
         this.id = id;
         this.programType = programType;
         this.title = title;
@@ -229,7 +187,7 @@ public class Program {
     /**
      * Default constructor.
      */
-    public Program() {
+    public ClassWithoutApiModelProperty() {
 
     }
     //</editor-fold>
@@ -396,7 +354,7 @@ public class Program {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Program programLight = (Program) o;
+        ClassWithoutApiModelProperty programLight = (ClassWithoutApiModelProperty) o;
         return Objects.equals(id, programLight.id)
                && Objects.equals(programType, programLight.programType)
                && Objects.equals(title, programLight.title)

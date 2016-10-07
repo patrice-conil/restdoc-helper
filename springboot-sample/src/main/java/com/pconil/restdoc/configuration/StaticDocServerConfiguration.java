@@ -23,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * Adds static/docs as resource location to handle them via servlet.
+ * 
  * @author Patrice_Conil
  */
 @Configuration

@@ -29,6 +29,8 @@ import java.util.List;
 
 /**
  * This class is used to include directory in classpath and to load java .class.
+ * 
+ * @author  patrice_conil
  */
 class ParserClassLoader {
 

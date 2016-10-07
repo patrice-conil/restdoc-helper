@@ -17,6 +17,8 @@ package com.pconil.restdoc;
 
 /**
  * Exception that indicates an error while creating the parser.
+ * 
+ * @author  patrice_conil
  */
 public class ParserException extends RuntimeException {
 

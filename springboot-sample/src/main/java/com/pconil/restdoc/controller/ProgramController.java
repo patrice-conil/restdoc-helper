@@ -42,6 +42,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 /**
  * Controller that manages TV-EPG resources.
+ * 
+ * @author  patrice_conil
  */
 @Controller
 @RequestMapping(value = "/v1", produces = {APPLICATION_JSON_UTF8_VALUE})

@@ -18,6 +18,8 @@ package com.pconil.restdoc.model;
 
 /**
  * All constants.
+ * 
+ * @author  patrice_conil
  */
 public class Constant {
 

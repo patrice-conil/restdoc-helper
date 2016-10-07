@@ -17,6 +17,8 @@ package com.pconil.restdoc;
 
 /**
  * All constants.
+ * 
+ * @author  patrice_conil
  */
 public class Constant {
     
@@ -46,6 +48,12 @@ public class Constant {
      * Line to add to terminate table of field properly.
      */
     static final String FIELD_FOOTER = "|===\n\n";
+
+    /**
+     * Constants that describe if a field is in a list or not.
+     */
+    static final boolean IN_LIST = true;
+    static final boolean OUT_OF_LIST = false;
     
     
     

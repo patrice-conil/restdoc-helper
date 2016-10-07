@@ -24,6 +24,8 @@ import java.util.Objects;
 
 /**
  * SimilarContent describes a similar content as the one it refers to.
+ * 
+ * @author  patrice_conil
  */
 @InspectToDocument(description = "SimilarContent describes a similar content as the one it refers to")
 class SimilarContent {
@@ -38,9 +40,7 @@ class SimilarContent {
      * Content identifier : the content identifier depends on its contentType. For MOVIE contentType, id is a videoId
      * (aka externalAssetId in RTV). For SEASON contentType, id is a seasonId (aka serieId in RTV).
      **/
-    @AsciidocAnnotation(description = "Content identifier : the content identifier depends on its contentType. "
-            + "For MOVIE contentType, id is a videoId (aka externalAssetId in RTV). For SEASON contentType, id is " 
-            + "a seasonId (aka serieId in RTV)")
+    @AsciidocAnnotation(description = "Content identifier")
     private String id = null;
 
     /**
@@ -50,15 +50,15 @@ class SimilarContent {
     private String offerId = null;
 
     /**
-     * Type of com.pconil.restdoc.service.
+     * Type of service.
      */
-    @AsciidocAnnotation(description = "Type of com.pconil.restdoc.service see <<com.pconil.restdoc.model-ServiceTypeEnum>>")
+    @AsciidocAnnotation(description = "Type of service")
     private String serviceType = null;
 
     /**
      * Type of content.
      */
-    @AsciidocAnnotation(description = "Type of content see <<com.pconil.restdoc.model-ContentTypeEnum>>")
+    @AsciidocAnnotation(description = "Type of content")
     private String contentType = null;
 
     /**
@@ -76,7 +76,7 @@ class SimilarContent {
     /**
      * List of available images.
      **/
-    @AsciidocAnnotation(description = "Available images see <<com.pconil.restdoc.model-Image>>")
+    @AsciidocAnnotation(description = "Available images")
     private List<String> images = new ArrayList<>();
     
 

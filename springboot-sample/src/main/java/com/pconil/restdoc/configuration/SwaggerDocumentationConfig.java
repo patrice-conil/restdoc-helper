@@ -28,6 +28,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * Swagger doc.
+ *
+ * @author  patrice_conil
  */
 @Configuration
 public class SwaggerDocumentationConfig {
@@ -40,10 +42,6 @@ public class SwaggerDocumentationConfig {
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Sample API")
-                .description("")
-                .license("")
-                .licenseUrl("")
-                .termsOfServiceUrl("")
                 .version("1.0.0-SNAPSHOT")
                 .contact(new Contact("Me", "", "me@myserver.com"))
                 .build();
