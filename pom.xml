@@ -16,7 +16,7 @@
         <module>springboot-sample</module>
     </modules>
 
-    <groupId>com.pconil.restdoc</groupId>
+    <groupId>com.orange.otml</groupId>
     <artifactId>restdoc-helper</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
