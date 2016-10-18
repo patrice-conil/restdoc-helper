@@ -3,12 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.orange.otml</groupId>
+        <artifactId>otml-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <modules>
         <module>restdoc-annotation</module>
         <module>restdoc-helper-plugin</module>
         <module>springboot-sample</module>
     </modules>
-    
+
     <groupId>com.pconil.restdoc</groupId>
     <artifactId>restdoc-helper</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -98,6 +105,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -113,7 +125,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version> 1.4.1.RELEASE</version>
+                    <version>1.4.1.RELEASE</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -128,5 +140,7 @@
             <url>http://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
-
+    <scm>
+        <connection>scm:git:https://mmmm7495@10.194.180.250/otm/restdoc-helper.git</connection>
+    </scm>
 </project>
