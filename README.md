@@ -3,7 +3,7 @@
 
 ## Overview
 
-The main goal of this project is to simplify the documentation process of your RESTFul services by combining hand-written using [Asciidoctor][3] docs, [Sprinfox static docs][1] generated docs or [Spring REST Docs][10] generated docs. 
+The main goal of this project is to simplify the documentation process of your RESTFul services by combining hand-written using [Asciidoctor][3] docs, [Springfox static docs][1] generated docs or [Spring REST Docs][10] generated docs. 
 Restdoc helper is a Maven plugin that generates [Asciidoctor][3] files and  [FieldDescriptors][7] from [Swagger 2][6] annotations
 
 The purpose of [Spring REST Docs][10] is to document your API with auto-generated snippets produced with [Spring MVC Test][4].
