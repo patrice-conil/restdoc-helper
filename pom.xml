@@ -3,12 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <modules>
         <module>restdoc-annotation</module>
         <module>restdoc-helper-plugin</module>
         <module>springboot-sample</module>
     </modules>
-    
+
     <groupId>com.pconil.restdoc</groupId>
     <artifactId>restdoc-helper</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -113,7 +114,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version> 1.4.1.RELEASE</version>
+                    <version>1.4.1.RELEASE</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -128,5 +129,4 @@
             <url>http://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
-
 </project>
