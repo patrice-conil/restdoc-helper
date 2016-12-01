@@ -52,5 +52,12 @@ public class Annotation2JavaParserTest {
         expected = new File("./src/test/resources/ClassWithoutApiModelPropertyFieldDescriptor.java.expected");
         assertThat(java).exists();
         assertThat(java).hasSameContentAs(expected);
+
+        filename = "./target/generated-test-sources/ExtendClass1DTOFieldDescriptor.java";
+        java = new File(filename);
+        assertThat(java).exists();
+        expected = new File("./src/test/resources/ExtendClass1DTOFieldDescriptor.java.expected");
+        assertThat(java).hasSameContentAs(expected);
     }
+    
 }

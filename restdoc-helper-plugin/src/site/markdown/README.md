@@ -3,7 +3,7 @@
 
 ## Overview
 
-The main goal of this project is to simplify the documentation process of your RESTFul services by combining hand-written using [Asciidoctor][3] docs, [Swagger static docs][1] generated docs or [Spring REST Docs][10] generated docs. 
+The main goal of this project is to simplify the documentation process of your RESTFul services by combining hand-written using [Asciidoctor][3] docs, [Springfox static docs][1] generated docs or [Spring REST Docs][10] generated docs. 
 Restdoc helper is a Maven plugin that generates [Asciidoctor][3] files and  [FieldDescriptors][7] from [Swagger 2][6] annotations
 
 The purpose of [Spring REST Docs][10] is to document your API with auto-generated snippets produced with [Spring MVC Test][4].
@@ -117,9 +117,7 @@ mvn clean install
 
 ## Contributing
 
-Contributors to this project agree to uphold its [code of conduct][11].
-
-There are several that you can contribute to restdoc-helper:
+There are several ways to contribute to restdoc-helper:
 
  - Open a [pull request][12].
  - Ask and answer questions on Stack Overflow using the [`restdoc-helper`][15] tag.
@@ -128,12 +126,13 @@ There are several that you can contribute to restdoc-helper:
 
 Restdoc helper is open source software released under the [Apache 2.0 license][14].
 
-[1]: http://swagger.io
+
+[1]: https://springfox.github.io/springfox/docs/snapshot/#configuring-springfox-staticdocs
 [2]: https://maven.apache.org/download.cgi
 [3]: http://asciidoctor.org
 [4]: http://docs.spring.io/spring-framework/docs/4.1.x/spring-framework-reference/htmlsingle/#spring-mvc-test-framework
 [5]: https://developer.github.com/v3/
-[6]: http://swagger.io
+[6]: http://swagger.io/specification/
 [7]: http://docs.spring.io/spring-restdocs/docs/current/reference/html5/#documenting-your-api-request-response-payloads-reusing-field-descriptors
 [10]: http://docs.spring.io/spring-restdocs/docs/current/reference/html5/
 [12]: https://help.github.com/articles/using-pull-requests/

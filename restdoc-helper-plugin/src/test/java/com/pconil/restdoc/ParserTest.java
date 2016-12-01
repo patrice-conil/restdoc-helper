@@ -93,6 +93,23 @@ public class ParserTest {
     }
 
     /**
+     * Parses java class that contains inherited description.
+     *
+     * @throws Exception if something goes wrong
+     */
+    @Test
+    public void parseSubClass() throws Exception {
+        Annotation2AsciiDocParser annotation2AsciiDocParser = new Annotation2AsciiDocParser(PACKAGE, ADOC_DIR, JAVA_DIR,
+                "target/classes");
+        annotation2AsciiDocParser.parse();
+        String filename = "target/generated-snippets/ExtendClass1DTO.adoc";
+        File adhoc = new File(filename);
+        assertThat(adhoc).exists();
+        File expected = new File("./src/test/resources/ExtendClass1DTOExpected.adoc");
+        assertThat(adhoc).hasSameContentAs(expected);
+    }
+    
+    /**
      * Parses java class that contains swagger description.
      *
      * @throws Exception if something goes wrong

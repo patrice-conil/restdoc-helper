@@ -1,0 +1,19 @@
+package com.pconil.restdoc;
+
+import org.springframework.restdocs.payload.FieldDescriptor; 
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+
+public class ExtendClass1DTOFieldDescriptor {
+    public static FieldDescriptor[] fdExtendClass1DTO = new FieldDescriptor[] {
+        fieldWithPath("field1").description("This field describe name of Class1DTO"),
+        fieldWithPath("field2").description("field 2"),
+        fieldWithPath("field3").description("This is the field field3")    };
+
+
+    public static FieldDescriptor[] fdExtendClass1DTOList = new FieldDescriptor[] {
+        fieldWithPath("[].field1").description("This field describe name of Class1DTO"),
+        fieldWithPath("[].field2").description("field 2"),
+        fieldWithPath("[].field3").description("This is the field field3")    };
+
+
+}

@@ -117,9 +117,7 @@ mvn clean install
 
 ## Contributing
 
-Contributors to this project agree to uphold its [code of conduct][11].
-
-There are several that you can contribute to restdoc-helper:
+There are several ways to contribute to restdoc-helper:
 
  - Open a [pull request][12].
  - Ask and answer questions on Stack Overflow using the [`restdoc-helper`][15] tag.
@@ -127,6 +125,7 @@ There are several that you can contribute to restdoc-helper:
 ## Licence
 
 Restdoc helper is open source software released under the [Apache 2.0 license][14].
+
 
 [1]: https://springfox.github.io/springfox/docs/snapshot/#configuring-springfox-staticdocs
 [2]: https://maven.apache.org/download.cgi

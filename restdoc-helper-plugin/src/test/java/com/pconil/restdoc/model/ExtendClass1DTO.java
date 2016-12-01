@@ -15,8 +15,8 @@
  */
 package com.pconil.restdoc.model;
 
-import com.pconil.restdoc.annotation.AsciidocAnnotation;
 import com.pconil.restdoc.annotation.InspectToDocument;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Annotations to generate restdoc file from pojo classes.
@@ -24,18 +24,15 @@ import com.pconil.restdoc.annotation.InspectToDocument;
  * @author  patrice_conil
  */
 @InspectToDocument(description = "This is the Class1 description")
-public class Class1DTO {
-    @AsciidocAnnotation(description="This field describe name of Class1DTO", constraints = "Length must be between 4 and 6")
-    String field1;
+public class ExtendClass1DTO extends Class1DTO{
 
-    @AsciidocAnnotation(description="field 2")
-    String field2 = null;
-
-    public Class1DTO(String field1, String field2) {
+    @ApiModelProperty(required = true, value="This is the field field3")
+    private String field3 = null;
+    
+    public ExtendClass1DTO(String field1, String field2, String field3) {
         this.field1 = field1;
         this.field2 = field2;
+        this.field3 = field3;
     }
-
-    public Class1DTO() {
-    }
+    public ExtendClass1DTO(){}
 }

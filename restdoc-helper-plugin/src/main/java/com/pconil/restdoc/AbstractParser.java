@@ -120,7 +120,7 @@ abstract class AbstractParser {
      * @throws ParserException if we can't create Class.adhoc files in target/generated-snippets/com.pconil.restdoc
      *                         .model.
      */
-    void parse() throws ParserException {
+    public void parse() throws ParserException {
 
         List<Class> classes;
         boolean hasDocumentedField;
@@ -135,19 +135,16 @@ abstract class AbstractParser {
             for (Class c : classes) {
                 LOGGER.debug("Parsing class {} to generate java code", c.getSimpleName());
                 if (c.isAnnotationPresent(InspectToDocument.class)) {
-                    hasDocumentedField = false;
                     // Parse all fields declared in this class
                     initializeFields();
-                    for (Field field : c.getDeclaredFields()) {
-                        hasDocumentedField = parseField(c, field, hasDocumentedField);
-                    }
+                    hasDocumentedField = parseFields(c, c);
                     if (hasDocumentedField) {
                         completeFields();
                         completeClass();
                         writeClass();
                     } else {
                         LOGGER.debug(String.format("You declared your class %s as documented "
-                                                                      + "but there is no documented field in it",
+                                                   + "but there is no documented field in it",
                                 c.getSimpleName()));
                     }
                 }
@@ -157,6 +154,25 @@ abstract class AbstractParser {
             logErrorAndThrowParserException("Class not found while parsing your model");
         }
     }
+
+    /**
+     * Parses all fields including inherited ones.
+     *
+     * @param toParse class to parse
+     * @param toDocument the class to document 
+     */
+    private boolean parseFields(Class toParse, Class toDocument){
+        boolean hasDocumentedField = false;
+        Class superclass = toParse.getSuperclass();
+        if (superclass.getDeclaredFields().length != 0) {
+            hasDocumentedField = parseFields(superclass, toDocument);
+        }
+        for (Field field : toParse.getDeclaredFields()) {
+            hasDocumentedField = parseField(toDocument, field, hasDocumentedField);
+        }
+        return hasDocumentedField;
+    }
+
 
     /**
      * Logs the error message and send a ParserException.
